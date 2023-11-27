@@ -5,7 +5,7 @@ import { useState } from "react";
 import FormFieldRequiredErrorMsg from "../../component/FormFieldRequiredErrorMsg";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const [isVisible, setIsVisible] = useState(false);
   const {
     register,
@@ -13,27 +13,36 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const handleLogin = (data) => {
+  const handleSignUp = (data) => {
     console.log(data);
   };
-
   return (
     <Container>
       <div className="grid grid-cols-2 h-full my-12">
-        <div className="h-auto flex items-center">
+        <div className="h-auto flex items-center order-last">
           <img
-            src="https://i.ibb.co/cDp0FCg/2942004.jpg"
+            src="https://i.ibb.co/74nyMGg/2853458.jpg"
             alt=""
             className="w-3/4 mx-auto"
           />
         </div>
         <div className="m-12 p-12 bg-my-secondary bg-opacity-20 backdrop-blur rounded-xl">
-          <h2 className="text-3xl text-center font-bold text-my-primary">
-            Please Login
-          </h2>
           <form
-            onSubmit={handleSubmit(handleLogin)}
+            onSubmit={handleSubmit(handleSignUp)}
             className="card-body w-full">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name*</span>
+              </label>
+              <input
+                type="text"
+                {...register("name", { required: true })}
+                placeholder="Full Name"
+                className="input input-bordered"
+                autoComplete="off"
+              />
+              {errors.name && <FormFieldRequiredErrorMsg />}
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email*</span>
@@ -48,14 +57,7 @@ const Login = () => {
                 className="input input-bordered"
                 autoComplete="off"
               />
-              {errors.email?.type === "required" && (
-                <FormFieldRequiredErrorMsg />
-              )}
-              {errors.email?.type === "pattern" && (
-                <span className="text-sm text-red-500 font-medium">
-                  Please Enter a valid email
-                </span>
-              )}
+              {errors.email && <FormFieldRequiredErrorMsg />}
             </div>
             <div className="form-control">
               <label className="label">
@@ -63,15 +65,35 @@ const Login = () => {
               </label>
               <input
                 type={isVisible ? "text" : "password"}
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 64,
+                  pattern:
+                    /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+\-=[\]{};'~`:"\\|,.<>/?])/,
+                })}
                 placeholder="Password"
                 className="input input-bordered"
               />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
+              {errors.password?.type === "required" && (
+                <FormFieldRequiredErrorMsg />
+              )}
+              {errors.password?.type === "minLength" && (
+                <span className="text-sm text-red-500 font-medium">
+                  Password must be at lest 6 characters long
+                </span>
+              )}
+              {errors.password?.type === "maxLength" && (
+                <span className="text-sm text-red-500 font-medium">
+                  Password cannot be more than 64 character long
+                </span>
+              )}
+              {errors.password?.type === "pattern" && (
+                <span className="text-sm text-red-500 font-medium">
+                  Password must contain a digit, an UPPERCASE, a lowercase and a
+                  special character
+                </span>
+              )}
             </div>
             <div className="form-control flex-row">
               <input
@@ -88,9 +110,9 @@ const Login = () => {
             </div>
           </form>
           <p className="text-center">
-            New Here?{" "}
-            <Link to="/signup" className="font-bold text-my-primary">
-              Create an account
+            Already have an account?{" "}
+            <Link to="/login" className="font-bold text-my-primary">
+              Login
             </Link>
           </p>
         </div>
@@ -99,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

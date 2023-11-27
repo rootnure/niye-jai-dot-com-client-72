@@ -1,13 +1,5 @@
 # NiyeJai dot com
 
-## Work continue form [This Repository](https://github.com/rootnure/bistro-boss-part-5-client-68)
-
-## Today's work
-
-- add item page with react hook form
-- upload image to imgbb using **imgbb api**
-- send add item page form data to database
-- updated useMenu hook (replace `fetch()` with TenStack `useQuery()`)
 
 ## React + Vite
 

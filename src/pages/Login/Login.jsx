@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const Login = () => {
   const { passwordLogin } = useAuth();
@@ -113,7 +114,13 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control">
-                <PrimaryBtn>Login</PrimaryBtn>
+                <PrimaryBtn>
+                  {authLoading ? (
+                    <TbFidgetSpinner className="text-2xl animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
+                </PrimaryBtn>
               </div>
             </form>
             <p className="text-center">

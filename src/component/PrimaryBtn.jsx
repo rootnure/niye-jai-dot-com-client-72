@@ -10,6 +10,6 @@ const PrimaryBtn = ({ children }) => {
   );
 };
 PrimaryBtn.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 export default PrimaryBtn;

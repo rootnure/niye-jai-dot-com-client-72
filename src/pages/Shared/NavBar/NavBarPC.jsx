@@ -66,7 +66,7 @@ const NavBarPC = () => {
 
   return (
     <header>
-      <div className="navbar bg-my-primary bg-opacity-[0.15] backdrop-blur-sm justify-center fixed top-0 z-[1000]">
+      <div className="navbar bg-white backdrop-blur-sm justify-center fixed top-0 z-[1000]">
         <Container>
           <div className="flex-1">
             <div className="w-fit">

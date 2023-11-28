@@ -10,9 +10,9 @@ const Footer = () => {
       style={{ backgroundImage: `url(${footerBg})` }}
       className="bg-cover">
       <Container>
-        <div className="footer p-10 text-white pt-20">
+        <div className="footer p-10 text-white pt-24">
           <aside>
-            <div className="saturate-[2.25]">
+            <div className="invert saturate-0">
               <Logo />
             </div>
             <p className="leading-6">
@@ -27,17 +27,19 @@ const Footer = () => {
             />
           </aside>
           <nav>
-            <header className="text-my-primary saturate-[2.5] font-bold uppercase underline">
+            <header className="text-black font-bold uppercase underline">
               Important Links
             </header>
-            <a className="link link-hover">About Us</a>
-            <a className="link link-hover">Enterprize</a>
-            <a className="link link-hover">Coverage Area</a>
-            <a className="link link-hover">Privacy Policy</a>
-            <a className="link link-hover">FAQs</a>
+            <a className="link link-hover hover:text-gray-700">About Us</a>
+            <a className="link link-hover hover:text-gray-700">Enterprize</a>
+            <a className="link link-hover hover:text-gray-700">Coverage Area</a>
+            <a className="link link-hover hover:text-gray-700">
+              Privacy Policy
+            </a>
+            <a className="link link-hover hover:text-gray-700">FAQs</a>
           </nav>
           <nav>
-            <header className="text-my-primary saturate-[2.5] font-bold uppercase underline">
+            <header className="text-black font-bold uppercase underline">
               Contacts
             </header>
             <p className="leading-6">
@@ -48,28 +50,34 @@ const Footer = () => {
               Gulsan, Dhaka-1202
             </p>
             <p className="leading-6">
-              <a href="tel:+8801234567890" className="link link-hover">
+              Hotline:
+              <a
+                href="tel:+8801234567890"
+                className="link link-hover hover:text-gray-700 ms-1">
                 +880 1234-567890
               </a>
             </p>
             <p className="leading-6">
-              <a href="mailto:contact@niyejai.com" className="link link-hover">
+              E-Mail:
+              <a
+                href="mailto:contact@niyejai.com"
+                className="link link-hover hover:text-gray-700 ms-1">
                 contact@niyejai.com
               </a>
             </p>
           </nav>
           <nav>
-            <header className="text-my-primary saturate-[2.5] font-bold uppercase underline">
+            <header className="text-black font-bold uppercase underline">
               Connect With Us
             </header>
             <div className="flex gap-4">
-              <a className="link link-hover">
+              <a className="link link-hover hover:text-gray-700">
                 <FaSquareFacebook className="text-3xl" />
               </a>
-              <a className="link link-hover">
+              <a className="link link-hover hover:text-gray-700">
                 <FaLinkedin className="text-3xl" />
               </a>
-              <a className="link link-hover">
+              <a className="link link-hover hover:text-gray-700">
                 <FaYoutube className="text-3xl" />
               </a>
             </div>

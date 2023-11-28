@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const SignUp = () => {
   const { createUser, updateUserInfo } = useAuth();
@@ -38,7 +39,12 @@ const SignUp = () => {
           toast.success("SignUp successful");
         });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.message.includes("already")) {
+          toast.error("Email Already In Use. Try login instead.");
+          setAuthLoading(false);
+        }
+      });
   };
   return (
     <Container>
@@ -169,7 +175,13 @@ const SignUp = () => {
                 </label>
               </div>
               <div className="form-control">
-                <PrimaryBtn>SignUp</PrimaryBtn>
+                <PrimaryBtn>
+                  {authLoading ? (
+                    <TbFidgetSpinner className="text-2xl animate-spin" />
+                  ) : (
+                    "SignUp"
+                  )}
+                </PrimaryBtn>
               </div>
             </form>
             <p className="text-center">

@@ -8,6 +8,7 @@ import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { TbFidgetSpinner } from "react-icons/tb";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createUser, updateUserInfo } = useAuth();
@@ -190,6 +191,7 @@ const SignUp = () => {
                 Login
               </Link>
             </p>
+            <SocialLogin setAuthLoading={setAuthLoading} />
           </div>
         </div>
       </main>

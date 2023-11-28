@@ -6,6 +6,7 @@ import FormFieldRequiredErrorMsg from "../../component/FormFieldRequiredErrorMsg
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { passwordLogin } = useAuth();
@@ -38,13 +39,16 @@ const Login = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>NiyeJai | Login</title>
+      </Helmet>
       {authLoading && (
         <p className="fixed z-[1001] w-fit mx-auto rounded-b-lg top-0 px-4 py-1.5 bg-amber-200 left-0 right-0 font-medium">
           loading...
         </p>
       )}
       <main className="min-h-screen flex items-center justify-center">
-        <div className="grid grid-cols-2 h-full my-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 h-full my-12">
           <div className="h-auto flex items-center">
             <img
               src="https://i.ibb.co/cDp0FCg/2942004.jpg"

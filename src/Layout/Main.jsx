@@ -1,4 +1,5 @@
-import NavBarPC from "../Shared/NavBar/NavBarPC";
+import Footer from "../pages/Shared/Footer/Footer";
+import NavBarPC from "../pages/Shared/NavBar/NavBarPC";
 import { Outlet } from "react-router-dom";
 
 const Main = () => {
@@ -6,7 +7,7 @@ const Main = () => {
     <>
       <NavBarPC />
       <Outlet />
-      <footer>footer</footer>
+      <Footer />
     </>
   );
 };

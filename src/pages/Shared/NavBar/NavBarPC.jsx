@@ -1,9 +1,9 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import Container from "../../component/Container";
+import Container from "../../../component/Container";
 import Logo from "../Logo/Logo";
-import { FaBell } from "react-icons/fa6";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
+import { FaBell } from "react-icons/fa6";
 
 const NavBarPC = () => {
   const { user, logOut } = useAuth();
@@ -69,7 +69,9 @@ const NavBarPC = () => {
       <div className="navbar bg-my-primary bg-opacity-[0.15] backdrop-blur-sm justify-center fixed top-0 z-[1000]">
         <Container>
           <div className="flex-1">
-            <Logo />
+            <div className="w-fit">
+              <Logo />
+            </div>
           </div>
           <div className="hidden lg:block">
             <ul className="menu menu-horizontal items-center px-1 gap-2 pc-navbar font-semibold">

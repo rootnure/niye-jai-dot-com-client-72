@@ -27,7 +27,7 @@ const Footer = () => {
             />
           </aside>
           <nav>
-            <header className="text-black font-bold uppercase underline">
+            <header className="text-white text-lg font-bold uppercase">
               Important Links
             </header>
             <a className="link link-hover hover:text-gray-700">About Us</a>
@@ -39,7 +39,7 @@ const Footer = () => {
             <a className="link link-hover hover:text-gray-700">FAQs</a>
           </nav>
           <nav>
-            <header className="text-black font-bold uppercase underline">
+            <header className="text-white text-lg font-bold uppercase">
               Contacts
             </header>
             <p className="leading-6">
@@ -67,7 +67,7 @@ const Footer = () => {
             </p>
           </nav>
           <nav>
-            <header className="text-black font-bold uppercase underline">
+            <header className="text-white text-lg font-bold uppercase">
               Connect With Us
             </header>
             <div className="flex gap-4">

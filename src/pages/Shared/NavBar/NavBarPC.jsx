@@ -29,7 +29,9 @@ const NavBarPC = () => {
       <li>
         <NavLink to="/notifications">
           <div className="indicator">
-            <span className="indicator-item badge bg-my-primary scale-50"></span>
+            <span className="indicator-item badge bg-my-primary scale-50">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-my-primary opacity-75"></span>
+            </span>
             <FaBell className="text-2xl" />
           </div>
         </NavLink>
@@ -65,21 +67,19 @@ const NavBarPC = () => {
   );
 
   return (
-    <header>
-      <div className="navbar bg-white backdrop-blur-sm justify-center fixed top-0 z-[1000]">
-        <Container>
-          <div className="flex-1">
-            <div className="w-fit">
-              <Logo />
-            </div>
+    <header className="navbar bg-white backdrop-blur-sm justify-center fixed top-0 z-[1000]">
+      <Container>
+        <div className="flex-1">
+          <div className="w-fit">
+            <Logo />
           </div>
-          <div className="hidden lg:block">
-            <ul className="menu menu-horizontal items-center px-1 gap-2 pc-navbar font-semibold">
-              {navItems}
-            </ul>
-          </div>
-        </Container>
-      </div>
+        </div>
+        <div className="hidden lg:block">
+          <ul className="menu menu-horizontal items-center px-1 gap-2 pc-navbar font-semibold">
+            {navItems}
+          </ul>
+        </div>
+      </Container>
     </header>
   );
 };

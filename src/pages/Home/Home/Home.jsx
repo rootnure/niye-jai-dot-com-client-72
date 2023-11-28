@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Container from "../../../component/Container";
 import Banner from "../Banner/Banner";
 import OurFeatures from "../OurFeatures/OurFeatures";
+import States from "../States/States";
 
 const Home = () => {
   return (
@@ -12,7 +13,7 @@ const Home = () => {
       <Banner />
       <Container className="my-16 space-y-12">
         <OurFeatures />
-        <div className="bg-amber-300">services</div>
+        <States />
         <div className="bg-gray-300">top rider</div>
       </Container>
     </main>

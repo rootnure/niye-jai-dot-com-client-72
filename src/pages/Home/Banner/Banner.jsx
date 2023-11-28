@@ -7,9 +7,9 @@ const Banner = () => {
       style={{
         backgroundImage: "url(https://i.ibb.co/wLVTPhj/Delivery5.jpg)",
       }}>
-      <div className="hero-overlay bg-my-primary bg-opacity-40"></div>
+      <div className="hero-overlay bg-my-primary bg-opacity-30"></div>
       <div className="hero-content text-center">
-        <div className="max-w-lg py-72">
+        <div className="max-w-lg py-60">
           <h1 className="mb-5 text-6xl font-bold">
             <br />
             Welcome To

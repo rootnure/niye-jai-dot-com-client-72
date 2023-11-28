@@ -5,7 +5,8 @@ const FeatureCard = ({ feature }) => {
   return (
     <div
       data-aos="fade-up"
-      className="card card-compact bg-my-primary bg-opacity-5 border border-my-primary hover:scale-105 transition-all duration-100">
+      data-aos-duration="1000"
+      className="card card-compact bg-my-primary bg-opacity-5 border border-my-primary">
       <figure className={`h-72 ${title.includes("Safety") ? "p-6" : ""}`}>
         <img src={img} alt={title} className="h-full" />
       </figure>

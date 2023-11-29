@@ -12,12 +12,15 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { useEffect } from "react";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import moment from "moment/moment";
 
 export const AuthContext = createContext();
 
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
+  const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -58,9 +61,15 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      if (currentUser && currentUser?.email) {
+        axiosPublic.post(`/users/${currentUser?.email}`, {
+          role: "User",
+          createdOn: moment.utc().format(),
+        });
+      }
     });
     return () => unsubscribe();
-  }, []);
+  }, [axiosPublic]);
 
   const value = {
     user,

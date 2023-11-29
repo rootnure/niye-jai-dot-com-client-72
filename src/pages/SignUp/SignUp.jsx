@@ -31,21 +31,21 @@ const SignUp = () => {
       setAuthLoading(false);
       return;
     }
-    createUser(data.email, data.password)
-      .then(() => {
-        updateUserInfo(data.name, null).then(() => {
+    createUser(data.email, data.password).then(() => {
+      updateUserInfo(data.name, null)
+        .then(() => {
           reset();
           setAuthLoading(false);
           navigate("/");
           toast.success("SignUp successful");
+        })
+        .catch((err) => {
+          if (err.message.includes("already")) {
+            toast.error("Email Already In Use. Try login instead.");
+            setAuthLoading(false);
+          }
         });
-      })
-      .catch((err) => {
-        if (err.message.includes("already")) {
-          toast.error("Email Already In Use. Try login instead.");
-          setAuthLoading(false);
-        }
-      });
+    });
   };
   return (
     <Container>

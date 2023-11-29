@@ -29,10 +29,10 @@ const NavBarPC = () => {
       <li>
         <NavLink to="/notifications">
           <div className="indicator">
-            <span className="indicator-item badge bg-my-primary scale-50">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-my-primary opacity-75"></span>
+            <span className="indicator-item badge bg-amber-600 scale-[35%]">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-600 opacity-75"></span>
             </span>
-            <FaBell className="text-2xl" />
+            <FaBell className="text-xl" />
           </div>
         </NavLink>
       </li>
@@ -45,7 +45,7 @@ const NavBarPC = () => {
             <img
               src={user.photoURL}
               alt={`Profile photo of ${user.displayName}`}
-              className="h-10 rounded-full"
+              className="h-9 rounded-full"
             />
           </div>
           <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-center">

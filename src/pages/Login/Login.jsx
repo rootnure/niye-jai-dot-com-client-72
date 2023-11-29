@@ -25,16 +25,17 @@ const Login = () => {
     setAuthLoading(true);
     passwordLogin(data.email, data.password)
       .then(() => {
-        setAuthLoading(false);
         toast.success("Login Successfully");
         navigate("/");
       })
       .catch((err) => {
         if (err.message.includes("invalid")) {
-          toast.error("Wrong email or password");
+          toast.error("Invalid Login Credentials");
         } else {
           toast.error("Something went wrong. Please try again.");
         }
+      })
+      .finally(() => {
         setAuthLoading(false);
       });
   };

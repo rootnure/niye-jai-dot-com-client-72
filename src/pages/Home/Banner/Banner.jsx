@@ -7,22 +7,22 @@ const Banner = () => {
       style={{
         backgroundImage: "url(https://i.ibb.co/wLVTPhj/Delivery5.jpg)",
       }}>
-      <div className="hero-overlay bg-my-primary bg-opacity-30"></div>
+      <div className="hero-overlay bg-my-primary bg-opacity-20"></div>
       <div className="hero-content text-center">
-        <div className="max-w-lg py-60">
-          <h1 className="mb-5 text-6xl font-bold">
+        <div className="max-w-2xl py-60">
+          <h1 className="mb-5 text-6xl font-extrabold">
             <br />
             Welcome To
             <br />
             NiyeJai Dot Com
           </h1>
-          <p className="my-4 font-medium text-lg">
+          <p className="my-4 font-extrabold text-xl">
             Your Trusted Courier Service in the town
           </p>
         </div>
       </div>
       <div className="absolute -bottom-20 bg-white w-1/2 shadow-lg rounded-lg">
-        <div className="join w-full bg-my-secondary bg-opacity-20 p-16 ">
+        <div className="join w-full bg-my-secondary bg-opacity-30 p-16 ">
           <input
             type="text"
             placeholder="Consignment ID"

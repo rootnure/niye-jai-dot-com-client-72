@@ -14,7 +14,7 @@ const Home = () => {
       <Container className="my-16 space-y-12">
         <OurFeatures />
         <States />
-        <div className="bg-gray-300">top rider</div>
+        <div className="bg-gray-300">top 5 rider</div>
       </Container>
     </main>
   );

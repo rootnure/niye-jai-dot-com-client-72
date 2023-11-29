@@ -6,9 +6,13 @@ const FeatureCard = ({ feature }) => {
     <div
       data-aos="fade-up"
       data-aos-duration="1000"
-      className="card card-compact bg-my-primary bg-opacity-5 border border-my-primary">
+      className="card card-compact bg-my-primary bg-opacity-5 border border-my-primary group">
       <figure className={`h-72 ${title.includes("Safety") ? "p-6" : ""}`}>
-        <img src={img} alt={title} className="h-full" />
+        <img
+          src={img}
+          alt={title}
+          className="h-full group-hover:scale-110 duration-100"
+        />
       </figure>
       <div className="text-center card-body mb-6">
         <h2 className="text-3xl font-bold">{title}</h2>

@@ -1,5 +1,8 @@
-# NiyeJai dot com
+# NiyeJai Dot Com
 
+## [Live Link](http://localhost:5173/)
+
+## [Server Code](https://github.com/programming-hero-web-course1/b8a12-server-side-rootnure)
 
 ## React + Vite
 

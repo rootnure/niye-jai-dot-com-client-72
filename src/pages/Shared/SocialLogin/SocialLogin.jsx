@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import { FaGoogle } from "react-icons/fa6";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
 
 const SocialLogin = ({ setAuthLoading }) => {
   const { googleLogin } = useAuth();
@@ -16,6 +16,8 @@ const SocialLogin = ({ setAuthLoading }) => {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
         setAuthLoading(false);
       });
   };
@@ -25,7 +27,7 @@ const SocialLogin = ({ setAuthLoading }) => {
       <button
         onClick={handleGoogleLogin}
         className="flex justify-center items-center w-full bg-opacity-80 hover:bg-opacity-100 text-white bg-my-primary mt-6 py-4 rounded-lg text-xl font-semibold">
-        <FaGoogle className="me-2 text-2xl" /> Google
+        <FcGoogle className="me-2 text-3xl" /> Google
       </button>
     </div>
   );

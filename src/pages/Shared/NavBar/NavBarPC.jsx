@@ -48,7 +48,7 @@ const NavBarPC = () => {
               className="h-10 rounded-full"
             />
           </div>
-          <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 text-center">
             <li className="text-center py-2">{user.displayName}</li>
             <li>
               <Link to="/dashboard">Dashboard</Link>

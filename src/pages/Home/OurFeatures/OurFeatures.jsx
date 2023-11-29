@@ -7,20 +7,22 @@ const OurFeatures = () => {
       _id: "abc",
       img: "https://i.ibb.co/Xs1NW1h/Same-day-delivery.png",
       title: "Express Delivery",
-      description: "Enjoy same day delivery from us in express delivery.",
+      description:
+        "Enjoy same day delivery from us in express delivery option.",
     },
     {
       _id: "bcd",
       img: "https://i.ibb.co/GHnptGT/delivery-icon.png",
       title: "Parcel Safety",
       description:
-        "Be relax while we deliver. We ensure 100% safety of your product.",
+        "Be relaxed while we deliver. We ensure 100% safety of your product.",
     },
     {
       _id: "cde",
       img: "https://i.ibb.co/4p1H0nN/Home-delivery.png",
       title: "Home Delivery",
-      description: "Receive your parcel at your dore-step.",
+      description:
+        "Receive your parcel at your dore-step. No need to wait in line.",
     },
   ];
   return (

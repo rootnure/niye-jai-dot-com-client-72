@@ -1,22 +1,13 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Container from "../../../component/Container";
 import Logo from "../Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
-import { toast } from "react-toastify";
 import { FaBell } from "react-icons/fa6";
+import useLogout from "../../../hooks/useLogout";
 
 const NavBarPC = () => {
-  const { user, logOut } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    logOut()
-      .then(() => {
-        toast.success("LogOut successfully");
-        navigate("/");
-      })
-      .catch((err) => console.error(err));
-  };
+  const { user } = useAuth();
+  const handleLogOut = useLogout();
 
   const navItems = (
     <>
@@ -29,8 +20,8 @@ const NavBarPC = () => {
       <li>
         <NavLink to="/notifications">
           <div className="indicator">
-            <span className="indicator-item badge bg-amber-600 scale-[35%]">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-600 opacity-75"></span>
+            <span className="indicator-item badge bg-my-primary scale-[35%]">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-my-primary opacity-75"></span>
             </span>
             <FaBell className="text-xl" />
           </div>

@@ -77,7 +77,7 @@ const Login = () => {
                     pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                   })}
                   placeholder="Email"
-                  className="input input-bordered"
+                  className="input input-my-bordered"
                   autoComplete="off"
                 />
                 {errors.email?.type === "required" && (
@@ -97,7 +97,7 @@ const Login = () => {
                   type={isVisible ? "text" : "password"}
                   {...register("password", { required: true })}
                   placeholder="Password"
-                  className="input input-bordered"
+                  className="input input-my-bordered"
                 />
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">

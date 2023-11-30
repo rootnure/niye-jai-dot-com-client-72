@@ -7,9 +7,9 @@ const DashboardLayout = () => {
   return (
     <>
       <Container>
-        <main className="flex gap-6">
+        <main className="flex">
           <Sidebar />
-          <section className="p-12">
+          <section className="p-12 min-h-screen bg-my-primary bg-opacity-5 w-full">
             <Outlet />
           </section>
         </main>

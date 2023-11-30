@@ -5,6 +5,8 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import DashboardLayout from "../Layout/DashboardLayout";
 import BookAParcel from "../pages/Dashboard/BookAParcel/BookAParcel";
+import PrivateRoute from "./PrivateRoute";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       // user routes
       {
@@ -64,10 +70,10 @@ const router = createBrowserRouter([
       },
       {
         path: "all-users",
-        element: <div>all users</div>,
+        element: <AllUsers />,
       },
       {
-        path: "all-rider",
+        path: "all-riders",
         element: <div>all delivery men</div>,
       },
       {

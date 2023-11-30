@@ -65,6 +65,8 @@ const AuthProvider = ({ children }) => {
         axiosPublic.post(`/users/${currentUser?.email}`, {
           role: "User",
           createdOn: moment.utc().format(),
+          name: currentUser.displayName,
+          photo: currentUser.photoURL,
         });
       }
     });

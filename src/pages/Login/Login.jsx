@@ -24,8 +24,8 @@ const Login = () => {
   const handleLogin = (data) => {
     setAuthLoading(true);
     passwordLogin(data.email, data.password)
-      .then(() => {
-        toast.success("Login Successfully");
+      .then(({ user }) => {
+        toast.success(`Welcome back, ${user.displayName}`);
         navigate("/");
       })
       .catch((err) => {

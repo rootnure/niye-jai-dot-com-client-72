@@ -10,8 +10,8 @@ const SocialLogin = ({ setAuthLoading }) => {
   const handleGoogleLogin = () => {
     setAuthLoading(true);
     googleLogin()
-      .then(() => {
-        toast.success("Login Successful");
+      .then(({ user }) => {
+        toast.success(`Welcome back, ${user.displayName}`);
         navigate("/");
       })
       .catch((err) => {

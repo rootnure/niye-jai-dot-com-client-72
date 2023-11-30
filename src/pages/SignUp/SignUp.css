@@ -1,0 +1,10 @@
+.file-input-my-primary, .input-my-bordered {
+    @apply border-opacity-100 border-my-primary;
+}
+.file-input-my-primary:focus, .input-my-bordered:focus {
+    @apply outline-my-primary;
+}
+.file-input-my-primary::file-selector-button {
+    @apply border-opacity-100 border-my-primary bg-opacity-80 hover:bg-opacity-100 bg-my-primary text-opacity-100 text-white;
+}
+

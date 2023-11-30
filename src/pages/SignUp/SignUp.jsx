@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { TbFidgetSpinner } from "react-icons/tb";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
+import "./SignUp.css";
+import axios from "axios";
 
 const SignUp = () => {
-  const { createUser, updateUserInfo } = useAuth();
+  const { createUser, updateUserInfo, logOut } = useAuth();
   const [isVisible, setIsVisible] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [roleErrMsg, setRoleErrMsg] = useState("");
@@ -23,7 +25,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const handleSignUp = (data) => {
+  const handleSignUp = async (data) => {
     setRoleErrMsg("");
     setAuthLoading(true);
     if (data.userType === "default") {
@@ -31,21 +33,44 @@ const SignUp = () => {
       setAuthLoading(false);
       return;
     }
-    createUser(data.email, data.password).then(() => {
-      updateUserInfo(data.name, null)
-        .then(() => {
-          reset();
-          setAuthLoading(false);
+    const imageFile = { image: data.photo[0] };
+    const img_api_url = import.meta.env.VITE_IMAGE_API_URL.replace(
+      "CLIENT_API_KEY",
+      import.meta.env.VITE_IMGBB_API_KEY
+    );
+    // image upload
+    try {
+      const imgRes = await axios.post(img_api_url, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      // create user
+      try {
+        await createUser(data.email, data.password);
+        toast.success("SignUp successful");
+        try {
+          // update user name & image
+          await updateUserInfo(data.name, imgRes?.data?.data?.display_url);
           navigate("/");
-          toast.success("SignUp successful");
-        })
-        .catch((err) => {
-          if (err.message.includes("already")) {
-            toast.error("Email Already In Use. Try login instead.");
-            setAuthLoading(false);
-          }
-        });
-    });
+        } catch (updateUserError) {
+          console.log(updateUserError);
+          logOut();
+          toast.error("Something went wrong updating your info. Please login");
+          navigate("/login");
+        } finally {
+          reset();
+        }
+      } catch (createUserError) {
+        if (createUserError.message.includes("already")) {
+          toast.error("Email Already In Use. Try login instead.");
+        }
+      }
+    } catch (imageError) {
+      console.log(imageError);
+    } finally {
+      setAuthLoading(false);
+    }
   };
   return (
     <Container>
@@ -58,7 +83,7 @@ const SignUp = () => {
         </p>
       )}
       <main className="min-h-screen flex items-center justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 h-full my-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 h-full my-6">
           <div className="h-auto flex items-center md:order-last">
             <img
               src="https://i.ibb.co/74nyMGg/2853458.jpg"
@@ -66,13 +91,14 @@ const SignUp = () => {
               className="w-3/4 mx-auto"
             />
           </div>
-          <div className="m-12 p-12 bg-my-secondary bg-opacity-20 backdrop-blur rounded-xl">
+          <div className="m-12 py-12 px-4 bg-my-secondary bg-opacity-20 backdrop-blur rounded-xl">
             <h2 className="text-4xl text-center font-bold text-my-primary">
               SignUp Now
             </h2>
             <form
               onSubmit={handleSubmit(handleSignUp)}
               className="card-body w-full">
+              {/* user name */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name*</span>
@@ -81,11 +107,12 @@ const SignUp = () => {
                   type="text"
                   {...register("name", { required: true })}
                   placeholder="Full Name"
-                  className="input input-bordered"
+                  className="input input-my-bordered"
                   autoComplete="off"
                 />
                 {errors.name && <FormFieldRequiredErrorMsg />}
               </div>
+              {/* user email */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email*</span>
@@ -97,7 +124,7 @@ const SignUp = () => {
                     pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                   })}
                   placeholder="Email"
-                  className="input input-bordered"
+                  className="input input-my-bordered"
                   autoComplete="off"
                 />
                 {errors.email?.type === "required" && (
@@ -109,12 +136,13 @@ const SignUp = () => {
                   </span>
                 )}
               </div>
+              {/* user role selection */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">User Type*</span>
                 </label>
                 <select
-                  className="input input-bordered"
+                  className="input input-my-bordered"
                   defaultValue="default"
                   {...register("userType")}>
                   <option disabled value="default">
@@ -129,6 +157,22 @@ const SignUp = () => {
                   </span>
                 )}
               </div>
+              {/* user profile photo upload */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Profile Photo*</span>
+                </label>
+                <input
+                  type="file"
+                  {...register("photo", {
+                    required: true,
+                  })}
+                  className="file-input file-input-bordered file-input-my-primary w-full"
+                  accept=".jpg,.jpeg,.png,.webp"
+                />
+                {errors.photo && <FormFieldRequiredErrorMsg />}
+              </div>
+              {/* password */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Password*</span>
@@ -143,7 +187,7 @@ const SignUp = () => {
                       /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+\-=[\]{};'~`:"\\|,.<>/?])/,
                   })}
                   placeholder="Password"
-                  className="input input-bordered"
+                  className="input input-my-bordered"
                 />
                 {errors.password?.type === "required" && (
                   <FormFieldRequiredErrorMsg />
@@ -160,8 +204,11 @@ const SignUp = () => {
                 )}
                 {errors.password?.type === "pattern" && (
                   <span className="text-sm text-red-500 font-medium">
-                    Password must contain a digit, an UPPERCASE, a lowercase and
-                    a special character
+                    Password must contain:
+                    <br />- A Digit (0-9)
+                    <br />- An Uppercase (A-Z)
+                    <br />- A Lowercase (a-z)
+                    <br />- A Special Character (/*-+!@`#$%^&*_)
                   </span>
                 )}
               </div>
@@ -185,13 +232,15 @@ const SignUp = () => {
                 </PrimaryBtn>
               </div>
             </form>
-            <p className="text-center">
-              Already have an account?{" "}
-              <Link to="/login" className="font-bold text-my-primary">
-                Login
-              </Link>
-            </p>
-            <SocialLogin setAuthLoading={setAuthLoading} />
+            <div className="mx-6">
+              <p className="text-center">
+                Already have an account?{" "}
+                <Link to="/login" className="font-bold text-my-primary">
+                  Login
+                </Link>
+              </p>
+              <SocialLogin setAuthLoading={setAuthLoading} />
+            </div>
           </div>
         </div>
       </main>

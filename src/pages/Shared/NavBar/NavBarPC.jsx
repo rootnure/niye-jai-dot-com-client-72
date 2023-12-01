@@ -36,7 +36,7 @@ const NavBarPC = () => {
             <img
               src={user.photoURL}
               alt={`Profile photo of ${user.displayName}`}
-              className="h-9 rounded-full"
+              className="h-8 w-8 rounded-full"
             />
           </div>
           <ul className="dropdown-content z-[1] menu p-2 border bg-base-100 rounded-box w-52 text-center">

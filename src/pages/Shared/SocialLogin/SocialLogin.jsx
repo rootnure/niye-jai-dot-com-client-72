@@ -22,14 +22,14 @@ const SocialLogin = ({ setAuthLoading }) => {
       });
   };
   return (
-    <div>
+    <>
       <div className="divider">Login With</div>
       <button
         onClick={handleGoogleLogin}
         className="flex justify-center items-center w-full bg-opacity-80 hover:bg-opacity-100 text-white bg-my-primary mt-6 py-4 rounded-lg text-xl font-semibold">
         <FcGoogle className="me-2 text-3xl" /> Google
       </button>
-    </div>
+    </>
   );
 };
 

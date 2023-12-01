@@ -11,9 +11,12 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 import "./SignUp.css";
 import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import moment from "moment";
 
 const SignUp = () => {
   const { createUser, updateUserInfo, logOut } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const [isVisible, setIsVisible] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [roleErrMsg, setRoleErrMsg] = useState("");
@@ -52,7 +55,17 @@ const SignUp = () => {
         try {
           // update user name & image
           await updateUserInfo(data.name, imgRes?.data?.data?.display_url);
-          navigate("/");
+          try {
+            await axiosPublic.post(`/users/${data?.email}`, {
+              role: data?.userType,
+              createdOn: moment.utc().format(),
+              name: data?.name,
+              photo: imgRes?.data?.data?.display_url,
+            });
+            navigate("/");
+          } catch (createUserError) {
+            console.log(createUserError);
+          }
         } catch (updateUserError) {
           console.log(updateUserError);
           logOut();
@@ -148,8 +161,8 @@ const SignUp = () => {
                   <option disabled value="default">
                     Select your role
                   </option>
-                  <option value="rider">Delivery Men</option>
-                  <option value="user">User</option>
+                  <option value="Rider">Delivery Men</option>
+                  <option value="User">User</option>
                 </select>
                 {roleErrMsg && (
                   <span className="text-sm text-red-500 font-medium">

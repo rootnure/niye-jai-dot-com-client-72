@@ -61,7 +61,12 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      if (currentUser && currentUser?.email) {
+      if (
+        currentUser &&
+        currentUser?.email &&
+        currentUser?.photoURL &&
+        currentUser?.displayName
+      ) {
         axiosPublic.post(`/users/${currentUser?.email}`, {
           role: "User",
           createdOn: moment.utc().format(),

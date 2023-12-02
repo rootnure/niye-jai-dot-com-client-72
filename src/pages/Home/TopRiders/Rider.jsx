@@ -24,7 +24,7 @@ const Rider = ({ rider }) => {
           />
         </figure>
       </div>
-      <div className="card-body pt-20">
+      <div className="card-body pt-20 items-center">
         <h2 className="card-title text-2xl font-bold">
           Total{" "}
           <CountUp
@@ -37,7 +37,7 @@ const Rider = ({ rider }) => {
         <div className="card-actions">
           <div className="badge bg-my-primary bg-opacity-50">
             <span className="font-bold me-1">
-              {Math.floor(Math.random() * 10)}
+              {Math.ceil(Math.random() * 10) + 2}
             </span>{" "}
             time(s) best delivery men of the month
           </div>

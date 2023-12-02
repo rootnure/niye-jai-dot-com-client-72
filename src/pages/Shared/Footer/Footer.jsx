@@ -15,7 +15,7 @@ const Footer = () => {
       }}
       className="bg-cover p-12 lg:py-0 text-center lg:text-left">
       <Container>
-        <div className="footer lg:p-10 text-white lg:pt-24">
+        <div className="footer lg:p-10 text-white lg:pt-16">
           <aside className="w-full lg:w-auto flex lg:flex-none flex-col items-center text-center">
             <div className="invert saturate-0">
               <Logo />

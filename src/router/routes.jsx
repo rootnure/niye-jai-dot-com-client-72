@@ -7,6 +7,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import BookAParcel from "../pages/Dashboard/BookAParcel/BookAParcel";
 import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AllRiders from "../pages/Dashboard/AllRiders";
 
 const router = createBrowserRouter([
   {
@@ -74,7 +75,7 @@ const router = createBrowserRouter([
       },
       {
         path: "all-riders",
-        element: <div>all delivery men</div>,
+        element: <AllRiders />,
       },
       {
         path: "statistics",

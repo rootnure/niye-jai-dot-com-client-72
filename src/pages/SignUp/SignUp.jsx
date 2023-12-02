@@ -62,6 +62,7 @@ const SignUp = () => {
               createdOn: moment.utc().format(),
               name: data?.name,
               photo: imgRes?.data?.data?.display_url,
+              phone: data?.phone,
             });
             navigate("/");
           } catch (createUserError) {
@@ -120,7 +121,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   {...register("name", { required: true })}
-                  placeholder="Full Name"
+                  placeholder="Mr./Mrs. X"
                   className="input input-my-bordered"
                   autoComplete="off"
                 />
@@ -137,7 +138,7 @@ const SignUp = () => {
                     required: true,
                     pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                   })}
-                  placeholder="Email"
+                  placeholder="user@gmail.com"
                   className="input input-my-bordered"
                   autoComplete="off"
                 />
@@ -149,6 +150,22 @@ const SignUp = () => {
                     Please enter a valid email
                   </span>
                 )}
+              </div>
+              {/* user phone */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Phone Number*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register("phone", {
+                    required: true,
+                  })}
+                  placeholder="+880 1234-567890"
+                  className="input input-my-bordered"
+                  autoComplete="off"
+                />
+                {errors.phone && <FormFieldRequiredErrorMsg />}
               </div>
               {/* user role selection */}
               <div className="form-control">
@@ -200,7 +217,7 @@ const SignUp = () => {
                     pattern:
                       /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+\-=[\]{};'~`:"\\|,.<>/?])/,
                   })}
-                  placeholder="Password"
+                  placeholder="######"
                   className="input input-my-bordered"
                 />
                 {errors.password?.type === "required" && (

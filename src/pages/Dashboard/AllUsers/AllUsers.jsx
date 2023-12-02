@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaArrowsRotate, FaTrash } from "react-icons/fa6";
-import { useRef } from "react";
+import { FaTrash } from "react-icons/fa6";
 import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const AllUsers = () => {
   const { user } = useAuth();
@@ -19,20 +20,68 @@ const AllUsers = () => {
     },
   });
   const availableRoles = [
-    // { role: "User", name: "User" },
+    { role: "User", name: "User" },
     { role: "Rider", name: "Delivery Men" },
     { role: "Admin", name: "Admin" },
   ];
-  const newRole = useRef();
+  // const newRole = useRef();
 
-  const handleDeleteUser = (id, name) => {
-    console.log({ id, name });
-    refetch();
+  const handleDeleteUser = async (id, name) => {
+    const result = await Swal.fire({
+      title: `Are you sure to delete "${name}"?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1FC58D",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, Delete!`,
+    });
+    if (result.isConfirmed) {
+      try {
+        const { data: deleteRes } = await axiosSecure.delete(
+          `/user-delete/${id}`
+        );
+        console.log(deleteRes);
+        if (deleteRes.deletedCount > 0) {
+          refetch();
+          toast.success("Updated Successfully");
+        }
+      } catch (roleUpdateErr) {
+        console.log(roleUpdateErr);
+      }
+    }
   };
 
-  const handleRoleUpdate = (id, name) => {
-    console.log({ id, name });
-    refetch();
+  const handleRoleUpdate = async (newRole, email, name) => {
+    if (newRole === "default") {
+      return;
+    }
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      html: `<span class="font-bold text-my-primary italic">${name}</span> will be <span class="font-bold text-my-primary">${
+        newRole === "Rider" ? "Delivery Men" : newRole
+      }</span> after this.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1FC58D",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, Make ${
+        newRole === "Rider" ? "Delivery Men" : newRole
+      }!`,
+    });
+    if (result.isConfirmed) {
+      try {
+        const { data: updateRes } = await axiosSecure.patch(
+          `/update-role/${email}?newRole=${newRole}`
+        );
+        if (updateRes.modifiedCount > 0) {
+          refetch();
+          toast.success("Updated Successfully");
+        }
+      } catch (roleUpdateErr) {
+        console.log(roleUpdateErr);
+      }
+    }
   };
 
   return (
@@ -52,7 +101,7 @@ const AllUsers = () => {
                 <th>Profile Photo</th>
                 <th>Email</th>
                 <th>Current Role</th>
-                <th>Select New Role</th>
+                <th>Update Role</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -82,13 +131,12 @@ const AllUsers = () => {
                   </td>
                   <td>
                     <select
-                      disabled={email === user.email || role === "Admin"}
-                      ref={newRole}
-                      defaultValue="default"
+                      onChange={(e) =>
+                        handleRoleUpdate(e.target.value, email, name)
+                      }
+                      disabled={email === user.email}
                       className="select w-max max-w-xs border-my-primary">
-                      <option value="default" disabled>
-                        Select New Role
-                      </option>
+                      <option value="default">Select New Role</option>
                       {availableRoles
                         .filter(({ role: filterRole }) => filterRole !== role)
                         .map(({ role: mapRole, name }, idx) => (
@@ -99,13 +147,6 @@ const AllUsers = () => {
                     </select>
                   </td>
                   <th className="flex gap-2">
-                    <button
-                      disabled={email === user.email || role === "Admin"}
-                      onClick={() => handleRoleUpdate(_id, name)}
-                      title={`Update role of ${name}`}
-                      className="btn btn-ghost uppercase border-2 hover:border-my-primary hover:bg-my-primary hover:text-white border-my-primary">
-                      <FaArrowsRotate className="text-xl" />
-                    </button>
                     <button
                       disabled={email === user.email}
                       onClick={() => handleDeleteUser(_id, name)}

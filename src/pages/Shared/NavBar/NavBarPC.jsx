@@ -60,7 +60,7 @@ const NavBarPC = () => {
   );
 
   return (
-    <header className="navbar bg-white shadow-md justify-center fixed top-0 z-[1000]">
+    <header className="navbar bg-white shadow-md justify-center fixed top-0 z-[1000] left-0 right-0">
       <Container>
         <div className="lg:flex-1 w-full lg:w-fit flex justify-center lg:justify-start">
           <div className="w-fit">

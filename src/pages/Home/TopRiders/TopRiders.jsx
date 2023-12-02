@@ -12,12 +12,13 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useRef, useState } from "react";
 import Rider from "./Rider";
+import RiderLoading from "./RiderLoading";
 
 const TopRiders = () => {
   const axiosPublic = useAxiosPublic();
   const [isByRating, setIsByRating] = useState(true);
   const topSelectedRef = useRef();
-  const { data: topRiders = {} } = useQuery({
+  const { data: topRiders = {}, isLoading } = useQuery({
     queryKey: ["topRiders"],
     queryFn: async () => {
       const result = await axiosPublic.get("/top-riders");
@@ -56,12 +57,12 @@ const TopRiders = () => {
           {isByRating
             ? byRating.map((rider) => (
                 <SwiperSlide key={rider._id}>
-                  <Rider rider={rider} />
+                  {isLoading ? <RiderLoading /> : <Rider rider={rider} />}
                 </SwiperSlide>
               ))
             : byDelivery.map((rider) => (
                 <SwiperSlide key={rider._id}>
-                  <Rider rider={rider} />
+                  {isLoading ? <RiderLoading /> : <Rider rider={rider} />}
                 </SwiperSlide>
               ))}
         </Swiper>

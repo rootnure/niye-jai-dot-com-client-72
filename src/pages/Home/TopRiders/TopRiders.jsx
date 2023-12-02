@@ -17,7 +17,7 @@ const TopRiders = () => {
   const axiosPublic = useAxiosPublic();
   const [isByRating, setIsByRating] = useState(true);
   const topSelectedRef = useRef();
-  const { data: topRiders = {}, refetch } = useQuery({
+  const { data: topRiders = {} } = useQuery({
     queryKey: ["topRiders"],
     queryFn: async () => {
       const result = await axiosPublic.get("/top-riders");
@@ -27,7 +27,6 @@ const TopRiders = () => {
   const { byDelivery = [], byRating = [] } = topRiders;
 
   const handleChange = () => {
-    refetch();
     const topBy = topSelectedRef.current.value;
     topBy === "rating" ? setIsByRating(true) : setIsByRating(false);
   };
@@ -40,16 +39,18 @@ const TopRiders = () => {
           ref={topSelectedRef}
           onChange={handleChange}
           defaultValue="Rating"
-          className="px-2 py-0.5 rounded-lg border border-my-primary w-40">
-          <option value="rating">Rating</option>
-          <option value="delivery">Delivery</option>
+          className="px-2 py-0.5 rounded-lg border border-my-primary w-max">
+          <option value="rating">Highest Rating</option>
+          <option value="delivery">Highest Delivery</option>
         </select>
       </div>
-      <div className="my-12">
+      <div className="my-12" data-aos="fade-up" data-aos-duration="500">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={16}
-          slidesPerView={3}
+          slidesPerView={
+            window.screen.width < 650 ? 1 : window.screen.width < 1024 ? 2 : 3
+          }
           navigation
           pagination={{ clickable: true }}>
           {isByRating

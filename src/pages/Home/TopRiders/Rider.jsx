@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import CountUp from "react-countup";
 import { FaStar } from "react-icons/fa6";
 
 const Rider = ({ rider }) => {
@@ -24,11 +25,28 @@ const Rider = ({ rider }) => {
         </figure>
       </div>
       <div className="card-body pt-20">
-        <h2 className="card-title"></h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <div className="badge badge-outline">Fashion</div>
-          <div className="badge badge-outline">Products</div>
+        <h2 className="card-title text-2xl font-bold">
+          Total{" "}
+          <CountUp
+            enableScrollSpy
+            end={rider.deliveryCount || 0}
+            duration={2}
+          />{" "}
+          parcel delivered
+        </h2>
+        <div className="card-actions">
+          <div className="badge bg-my-primary bg-opacity-50">
+            <span className="font-bold me-1">
+              {Math.floor(Math.random() * 10)}
+            </span>{" "}
+            time(s) best delivery men of the month
+          </div>
+          <div className="badge bg-my-primary bg-opacity-50">
+            <span className="font-bold me-1">
+              {Math.floor(Math.random() * 3)}
+            </span>{" "}
+            time(s) best delivery men of the year
+          </div>
         </div>
       </div>
     </div>

@@ -2,16 +2,21 @@ import { FaLinkedin, FaSquareFacebook, FaYoutube } from "react-icons/fa6";
 import Container from "../../../component/Container";
 import Logo from "../Logo/Logo";
 import footerBg from "./footer.svg";
+import footerBgSm from "./footerSM.svg";
 import googlePlayBadge from "./google-play-badge.svg";
 
 const Footer = () => {
   return (
     <footer
-      style={{ backgroundImage: `url(${footerBg})` }}
-      className="bg-cover">
+      style={{
+        backgroundImage: `url(${
+          window.screen.width < 1024 ? footerBgSm : footerBg
+        })`,
+      }}
+      className="bg-cover p-12 lg:py-0 text-center lg:text-left">
       <Container>
-        <div className="footer p-10 text-white pt-24">
-          <aside>
+        <div className="footer lg:p-10 text-white lg:pt-24">
+          <aside className="w-full lg:w-auto flex lg:flex-none flex-col items-center text-center">
             <div className="invert saturate-0">
               <Logo />
             </div>
@@ -26,9 +31,9 @@ const Footer = () => {
               className="max-h-12"
             />
           </aside>
-          <nav>
-            <header className="text-white text-lg font-bold uppercase">
-              Important Links
+          <nav className="w-full lg:w-auto flex lg:flex-none flex-col items-center">
+            <header className="text-white text-lg font-bold uppercase px-6 border-b mb-2">
+              Links
             </header>
             <a className="link link-hover hover:text-gray-700">About Us</a>
             <a className="link link-hover hover:text-gray-700">Enterprize</a>
@@ -38,8 +43,8 @@ const Footer = () => {
             </a>
             <a className="link link-hover hover:text-gray-700">FAQs</a>
           </nav>
-          <nav>
-            <header className="text-white text-lg font-bold uppercase">
+          <nav className="w-full lg:w-auto flex lg-flex-none flex-col items-center">
+            <header className="text-white text-lg font-bold uppercase px-6 border-b mb-2">
               Contacts
             </header>
             <p className="leading-6">
@@ -66,8 +71,8 @@ const Footer = () => {
               </a>
             </p>
           </nav>
-          <nav>
-            <header className="text-white text-lg font-bold uppercase">
+          <nav className="w-full lg:w-auto flex lg-flex-none flex-col items-center">
+            <header className="text-white text-lg font-bold uppercase px-6 border-b mb-2">
               Connect With Us
             </header>
             <div className="flex gap-4">

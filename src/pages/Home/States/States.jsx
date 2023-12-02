@@ -16,30 +16,38 @@ const States = () => {
     {
       title: "Total Bookings",
       value: countData.bookingCount || 0,
-      icon: <FaBook className="text-5xl text-my-primary me-2" />,
+      icon: (
+        <FaBook className="text-3xl md:text-4xl lg:text-5xl text-my-primary me-2" />
+      ),
     },
     {
       title: "Parcel Delivered",
       value: countData.deliveryCount || 0,
-      icon: <FaTruck className="text-5xl text-my-primary me-2" />,
+      icon: (
+        <FaTruck className="text-3xl md:text-4xl lg:text-5xl text-my-primary me-2" />
+      ),
     },
     {
       title: "Happy Customers",
       value: countData.userCount || 0,
-      icon: <FaUsers className="text-5xl text-my-primary me-2" />,
+      icon: (
+        <FaUsers className="text-3xl md:text-4xl lg:text-5xl text-my-primary me-2" />
+      ),
     },
   ];
   return (
     <section className="py-12" data-aos="fade-up">
-      <div className="stats w-full py-6 border-y border-gray-200 rounded-none">
+      <div className="stats w-full py-6 border-gray-200 rounded-none">
         {states.map(({ title, icon, value }) => (
           <div
             key={title}
             className="flex items-center justify-center text-center py-4">
-            <div>{icon}</div>
             <div>
-              <div className="text-lg text-gray-500 font-medium">{title}</div>
-              <div className="text-5xl font-extrabold">
+              <div className="text-sm md:text-base lg:text-lg text-gray-500 font-medium whitespace-nowrap">
+                {title}
+              </div>
+              <div className="text-3xl md:text-4xl lg:text-5xl font-extrabold flex items-center justify-center">
+                <div>{icon}</div>
                 <CountUp enableScrollSpy end={value} duration={2} />
               </div>
             </div>

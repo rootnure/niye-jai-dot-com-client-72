@@ -28,9 +28,9 @@ const OurFeatures = () => {
   return (
     <section>
       <SectionTitle heading="Our Features" subHeading="Why Us" />
-      <div className="grid grid-cols-3 gap-4">
-        {ourFeatures.map((feature) => (
-          <FeatureCard key={feature._id} feature={feature} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {ourFeatures.map((feature, idx) => (
+          <FeatureCard key={feature._id} feature={feature} idx={idx} />
         ))}
       </div>
     </section>

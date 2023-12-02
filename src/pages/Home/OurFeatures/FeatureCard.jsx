@@ -7,7 +7,9 @@ const FeatureCard = ({ feature, idx }) => {
       data-aos="fade-up"
       data-aos-duration="500"
       className={`card card-compact bg-my-primary bg-opacity-5 border border-my-primary group ${
-        idx === 2 ? "col-span-2 w-1/2 mx-auto" : ""
+        idx === 2
+          ? "md:col-span-2 lg:col-span-1 md:w-1/2 lg:w-full md:mx-auto lg:mx-0"
+          : ""
       }`}>
       <figure
         className={`h-40 lg:h-72 ${title.includes("Safety") ? "p-6" : ""}`}>

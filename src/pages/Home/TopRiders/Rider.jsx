@@ -5,8 +5,8 @@ import { FaStar } from "react-icons/fa6";
 const Rider = ({ rider }) => {
   //   console.log(rider);
   return (
-    <div className="card border">
-      <div className="h-32 bg-my-primary rounded-t-lg p-6">
+    <div className="card border rounded-md lg:rounded-lg">
+      <div className="h-32 bg-my-primary rounded-t-md lg:rounded-t-lg p-2 lg:p-6">
         <div className=" text-white flex items-center justify-between">
           <h2 className="text-white text-3xl font-semibold">{rider.name}</h2>
           <p className="text-sm flex items-center gap-1 border px-1 rounded-full">

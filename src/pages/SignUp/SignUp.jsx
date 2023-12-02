@@ -13,6 +13,7 @@ import "./SignUp.css";
 import axios from "axios";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import moment from "moment";
+import sideImg from "./2853458.jpg";
 
 const SignUp = () => {
   const { createUser, updateUserInfo, logOut } = useAuth();
@@ -99,8 +100,8 @@ const SignUp = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 h-full my-6">
           <div className="h-auto flex items-center md:order-last">
             <img
-              src="https://i.ibb.co/74nyMGg/2853458.jpg"
-              alt=""
+              src={sideImg}
+              alt="Side Illustrator"
               className="w-3/4 mx-auto"
             />
           </div>

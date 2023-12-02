@@ -37,7 +37,7 @@ const States = () => {
   ];
   return (
     <section className="py-12" data-aos="fade-up">
-      <div className="stats w-full py-6 border-gray-200 rounded-none">
+      <div className="stats w-full py-6 border-y border-gray-200 rounded-none">
         {states.map(({ title, icon, value }) => (
           <div
             key={title}

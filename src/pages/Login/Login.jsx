@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { TbFidgetSpinner } from "react-icons/tb";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
+import sideImage from "./2942004.jpg";
 
 const Login = () => {
   const { passwordLogin } = useAuth();
@@ -54,8 +55,8 @@ const Login = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 h-full my-12">
           <div className="h-auto flex items-center">
             <img
-              src="https://i.ibb.co/cDp0FCg/2942004.jpg"
-              alt=""
+              src={sideImage}
+              alt="Side Illustrator"
               className="w-3/4 mx-auto"
             />
           </div>

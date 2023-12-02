@@ -7,7 +7,10 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import BookAParcel from "../pages/Dashboard/BookAParcel/BookAParcel";
 import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
-import AllRiders from "../pages/Dashboard/AllRiders";
+import AllRiders from "../pages/Dashboard/AllRiders/AllRiders";
+import UserRoute from "./UserRoute";
+import RiderRoute from "./RiderRoute";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -43,43 +46,79 @@ const router = createBrowserRouter([
       // user routes
       {
         path: "book-parcel",
-        element: <BookAParcel />,
+        element: (
+          <UserRoute>
+            <BookAParcel />
+          </UserRoute>
+        ),
       },
       {
         path: "my-parcels",
-        element: <div>My parcels</div>,
+        element: (
+          <UserRoute>
+            <div>My parcels</div>
+          </UserRoute>
+        ),
       },
       {
         path: "profile",
-        element: <div>My Profile</div>,
+        element: (
+          <UserRoute>
+            <div>My Profile</div>
+          </UserRoute>
+        ),
       },
 
       // rider routes
       {
         path: "delivery-list",
-        element: <div>delivery list</div>,
+        element: (
+          <RiderRoute>
+            <div>delivery list</div>
+          </RiderRoute>
+        ),
       },
       {
         path: "my-reviews",
-        element: <div>My reviews</div>,
+        element: (
+          <RiderRoute>
+            <div>My reviews</div>
+          </RiderRoute>
+        ),
       },
 
       // admin routes
       {
         path: "all-parcels",
-        element: <div>all parcels</div>,
+        element: (
+          <AdminRoute>
+            <div>all parcels</div>
+          </AdminRoute>
+        ),
       },
       {
         path: "all-users",
-        element: <AllUsers />,
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "all-riders",
-        element: <AllRiders />,
+        element: (
+          <AdminRoute>
+            <AllRiders />
+          </AdminRoute>
+        ),
       },
       {
         path: "statistics",
-        element: <div>Statistics</div>,
+        element: (
+          <AdminRoute>
+            <div>Statistics</div>
+          </AdminRoute>
+        ),
       },
     ],
   },

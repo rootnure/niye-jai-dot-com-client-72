@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import SectionTitle from "../../component/SectionTitle";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import SectionTitle from "../../../component/SectionTitle";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllRiders = () => {
   const axiosSecure = useAxiosSecure();
@@ -34,7 +34,7 @@ const AllRiders = () => {
             <tbody className="border-y-2">
               {allRiders.map(
                 (
-                  { _id, name, photo, phone, deliveryCount, ratingAvg },
+                  { _id, name, photo, email, phone, deliveryCount, ratingAvg },
                   index
                 ) => (
                   <tr key={_id} className="">
@@ -51,13 +51,19 @@ const AllRiders = () => {
                         </div>
                         <div className="text-left">
                           <div className="font-bold">{name}</div>
-                          <div className="text-sm opacity-50">Delivery Men</div>
+                          <div className="text-sm opacity-50" title={email}>
+                            {email.split("@")[0].slice(0, 3) +
+                              "..." +
+                              email.split("@")[0].slice(-2) +
+                              "@" +
+                              email.split("@")[1]}
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td>{phone || "-"}</td>
-                    <td>{deliveryCount || 0}</td>
-                    <td>{ratingAvg || 0}</td>
+                    <td>{deliveryCount || "-"}</td>
+                    <td>{ratingAvg || "-"}</td>
                   </tr>
                 )
               )}

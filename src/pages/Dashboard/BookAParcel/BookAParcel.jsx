@@ -31,7 +31,7 @@ const BookAParcel = () => {
     <section className="-mt-12 mb-12">
       <SectionTitle heading="Book A Parcel" subHeading="Ship Your Happiness" />
       <div className="-mt-4">
-        <form onSubmit={handleSubmit(handleBookParcel)} className="form-bdy">
+        <form onSubmit={handleSubmit(handleBookParcel)} className="form-body">
           <div className="grid grid-cols-2 gap-x-3 gap-y-1">
             <div className="form-control">
               <label className="label">

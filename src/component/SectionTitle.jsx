@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const SectionTitle = ({ heading, subHeading }) => {
   return (
-    <div className="w-fit mx-auto text-center my-12">
+    <div className="w-fit min-w-[275px] mx-auto text-center my-12">
       {subHeading && (
         <p className="text-base text-amber-600 my-2">---{subHeading}---</p>
       )}

@@ -5,6 +5,7 @@ import AdminRoute from "../../../router/AdminRoute";
 import RiderRoute from "../../../router/RiderRoute";
 import UserRoute from "../../../router/UserRoute";
 import BookAParcel from "../BookAParcel/BookAParcel";
+import AdminStatistics from "../AdminStatistics/AdminStatistics";
 
 const ConditionalPage = () => {
   const { role, isRoleLoading } = useRole();
@@ -25,7 +26,7 @@ const ConditionalPage = () => {
   } else if (role === "Admin") {
     return (
       <AdminRoute>
-        <div>All Bookings</div>
+        <AdminStatistics />
       </AdminRoute>
     );
   } else {

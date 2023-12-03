@@ -15,6 +15,8 @@ import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import UpdateBooking from "../pages/Dashboard/UpdateBooking/UpdateBooking";
 import ConditionalPage from "../pages/Dashboard/ConditionalPage/ConditionalPage";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
+import AdminStatistics from "../pages/Dashboard/AdminStatistics/AdminStatistics";
+import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 
 const router = createBrowserRouter([
   {
@@ -106,10 +108,18 @@ const router = createBrowserRouter([
 
       // admin routes
       {
+        path: "statistics",
+        element: (
+          <AdminRoute>
+            <AdminStatistics />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "all-parcels",
         element: (
           <AdminRoute>
-            <div>all parcels</div>
+            <AllParcels />
           </AdminRoute>
         ),
       },
@@ -126,14 +136,6 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllRiders />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "statistics",
-        element: (
-          <AdminRoute>
-            <div>Statistics</div>
           </AdminRoute>
         ),
       },

@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import SummaryHeading from "../../../component/SummaryHeading";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -43,6 +44,7 @@ const MyParcels = () => {
   return (
     <section className="-mt-12 mb-12">
       <SectionTitle heading="My Parcels" subHeading="Bookings" />
+      <SummaryHeading>Total Bookings: {userBookings.length}</SummaryHeading>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -50,6 +52,11 @@ const MyParcels = () => {
             <tr className="text-center bg-my-primary text-white">
               <th>#</th>
               <th>Parcel Type</th>
+              <th>
+                Booking
+                <br />
+                Date
+              </th>
               <th>
                 Requested
                 <br />
@@ -59,11 +66,6 @@ const MyParcels = () => {
                 Approximate
                 <br />
                 Delivery Date
-              </th>
-              <th>
-                Booking
-                <br />
-                Date
               </th>
               <th>Delivery Men ID</th>
               <th>Booking Status</th>
@@ -91,6 +93,11 @@ const MyParcels = () => {
                   <th>{index + 1}</th>
                   <td>{type || "-"}</td>
                   <td>
+                    {bookingDate
+                      ? moment(bookingDate).format("DD-MMM-YYYY")
+                      : "-"}
+                  </td>
+                  <td>
                     {reqDeliveryDate
                       ? moment(reqDeliveryDate).format("DD-MMM-YYYY")
                       : "-"}
@@ -99,11 +106,6 @@ const MyParcels = () => {
                     {approxDeliveryDate
                       ? moment(approxDeliveryDate).format("DD-MMM-YYYY")
                       : status}
-                  </td>
-                  <td>
-                    {bookingDate
-                      ? moment(bookingDate).format("DD-MMM-YYYY")
-                      : "-"}
                   </td>
                   <td>{deliveryMen || status}</td>
                   <td

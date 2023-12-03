@@ -5,17 +5,22 @@ import moment from "moment";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredErrorMsg";
-import { useNavigate } from "react-router-dom";
+import SummaryHeading from "../../../component/SummaryHeading";
 
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
+  const [dateRange, setDateRange] = useState({
+    dateFrom: "",
+    dateTo: "",
+  });
   const [manageId, setManageId] = useState("");
   const [selectRiderError, setSelectRiderError] = useState(false);
   const { data: bookings = [], refetch: refetchBookings } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/bookings");
+      const { data } = await axiosSecure.get(
+        `/bookings?dateFrom=${dateRange.dateFrom}&dateTo=${dateRange.dateTo}`
+      );
       return data;
     },
   });
@@ -32,6 +37,12 @@ const AllParcels = () => {
     handleSubmit,
     formState: { errors },
     reset,
+  } = useForm();
+
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    formState: { errors: errors2 },
   } = useForm();
 
   const handleManageBooking = async (data) => {
@@ -53,16 +64,66 @@ const AllParcels = () => {
       if (manageRes.modifiedCount > 0) {
         reset();
         refetchBookings();
-        navigate("/dashboard/all-parcels");
       }
     } catch (manageErr) {
       console.log(manageErr);
     }
   };
 
+  const handleBookingsFilter = async (data) => {
+    setDateRange({
+      dateFrom: moment(data.dateFrom).format("YYYY-MM-DD"),
+      dateTo: moment(data.dateTo).format("YYYY-MM-DD"),
+    });
+  };
+
   return (
-    <section className="-mt-12 mb-12">
+    <section className="-mt-6 mb-12">
       <SectionTitle subHeading="All Bookings" heading="Parcels" />
+      <div className="my-6 flex justify-between items-center">
+        <SummaryHeading>Total Bookings: {bookings.length}</SummaryHeading>
+        <div>
+          <form
+            onSubmit={handleSubmit2(handleBookingsFilter)}
+            className="form-body">
+            <div className="flex items-end gap-x-3 gap-y-1">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">
+                    Date From
+                    <span className="text-red-500">*</span>
+                  </span>
+                </label>
+                <input
+                  type="date"
+                  {...register2("dateFrom", { required: true })}
+                  className="input input-my-bordered"
+                />
+                {errors2.dateFrom && <FormFieldRequiredErrorMsg />}
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">
+                    Date To
+                    <span className="text-red-500">*</span>
+                  </span>
+                </label>
+                <input
+                  type="date"
+                  {...register2("dateTo", { required: true })}
+                  className="input input-my-bordered"
+                />
+                {errors2.dateTo && <FormFieldRequiredErrorMsg />}
+              </div>
+              <button
+                type="submit"
+                className="btn bg-my-primary bg-opacity-80 border-my-primary hover:bg-my-primary hover:bg-opacity-100 text-white uppercase w-28">
+                Filter
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -110,7 +171,11 @@ const AllParcels = () => {
                       ? moment(bookingDate).format("DD-MMM-YYYY")
                       : "-"}
                   </td>
-                  <td>{reqDeliveryDate}</td>
+                  <td>
+                    {reqDeliveryDate
+                      ? moment(reqDeliveryDate).format("DD-MMM-YYYY")
+                      : "-"}
+                  </td>
                   <td>{deliveryFee}tk.</td>
                   <td
                     className={`font-bold ${
@@ -126,6 +191,7 @@ const AllParcels = () => {
                   </td>
                   <td>
                     <a
+                      disabled={status !== "Pending"}
                       onClick={() => setManageId(_id)}
                       href="#manageBooking"
                       className="btn btn-sm bg-my-primary bg-opacity-80 border-my-primary hover:bg-my-primary hover:bg-opacity-100 text-white uppercase">

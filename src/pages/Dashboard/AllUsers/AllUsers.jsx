@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import SectionTitle from "../../../component/SectionTitle";
+import SummaryHeading from "../../../component/SummaryHeading";
 
 const AllUsers = () => {
   const { user } = useAuth();
@@ -79,11 +80,9 @@ const AllUsers = () => {
   };
 
   return (
-    <>
-      <SectionTitle heading="All Users" />
-      <h3 className="text-3xl -mt-6 mb-4 font-semibold">
-        Total Users: {allUsers.length}
-      </h3>
+    <section className="-mt-6 mb-12">
+      <SectionTitle heading="All Users" subHeading="All Registered" />
+      <SummaryHeading>Total Users: {allUsers.length}</SummaryHeading>
       {isLoading ? (
         "Loading..."
       ) : (
@@ -181,7 +180,7 @@ const AllUsers = () => {
           </table>
         </div>
       )}
-    </>
+    </section>
   );
 };
 

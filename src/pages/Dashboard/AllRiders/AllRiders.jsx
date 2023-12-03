@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../component/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import SummaryHeading from "../../../component/SummaryHeading";
 
 const AllRiders = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,8 +14,9 @@ const AllRiders = () => {
   });
 
   return (
-    <section>
-      <SectionTitle heading="All Delivery Men" />
+    <section className="-mt-6 mb-12">
+      <SectionTitle heading="All Delivery Men" subHeading="Riders" />
+      <SummaryHeading>Total Delivery Men: {allRiders.length}</SummaryHeading>
       {isLoading ? (
         "Loading..."
       ) : (

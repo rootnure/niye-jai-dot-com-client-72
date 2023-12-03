@@ -43,7 +43,7 @@ const UpdateBooking = () => {
 
   return (
     <section className="-mt-12 mb-12">
-      <SectionTitle heading="Book A Parcel" subHeading="Ship Your Happiness" />
+      <SectionTitle heading="Update Booking" subHeading="Fix Incorrect Data" />
       <div className="-mt-4">
         <form onSubmit={handleSubmit(handleUpdateBooking)} className="form-bdy">
           <div className="grid grid-cols-2 gap-x-3 gap-y-1">
@@ -129,8 +129,8 @@ const UpdateBooking = () => {
                 <span className="label-text">Price (Delivery Cost)</span>
               </label>
               <p className="input input-my-bordered bg-gray-200 flex items-center italic text-sm font-semibold overflow-hidden whitespace-nowrap">
-                {bookingData.deliveryFee}tk. (Current) [Fee may update after
-                update]
+                {bookingData.deliveryFee}tk. (Current) [Fee may change upon
+                weight change after update]
               </p>
             </div>
             <div className="form-control">

@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoute";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import UpdateBooking from "../pages/Dashboard/UpdateBooking/UpdateBooking";
 import ConditionalPage from "../pages/Dashboard/ConditionalPage/ConditionalPage";
+import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
         path: "profile",
         element: (
           <UserRoute>
-            <div>My Profile</div>
+            <MyProfile />
           </UserRoute>
         ),
       },

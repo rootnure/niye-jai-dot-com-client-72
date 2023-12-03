@@ -83,6 +83,7 @@ const MyParcels = () => {
                   bookingDate,
                   deliveryMen,
                   status,
+                  deliveryFee,
                 },
                 index
               ) => (
@@ -149,7 +150,7 @@ const MyParcels = () => {
                     <button
                       disabled={status !== "Pending"}
                       className="btn border-2 border-my-secondary hover:bg-my-secondary hover:bg-opacity-50 hover:border-my-primary">
-                      Pay
+                      Pay {deliveryFee}tk.
                     </button>
                   </td>
                 </tr>

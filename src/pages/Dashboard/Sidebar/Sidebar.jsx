@@ -24,7 +24,7 @@ const Sidebar = () => {
 
   return (
     <section className="relative bg-my-primary bg-opacity-30 min-h-screen">
-      <aside className="w-max min-w-[256px] px-6 py-12">
+      <aside className="w-max min-w-[256px] px-6 py-3">
         <div className="flex justify-center">
           <Logo />
         </div>
@@ -89,10 +89,17 @@ const Sidebar = () => {
                 <>
                   <li>
                     <NavLink
-                      to="/dashboard/all-parcels"
+                      to="/dashboard/statistics"
                       className={`flex items-center gap-2 px-4 py-2 ${
                         pathname === "/dashboard" ? "active" : ""
                       }`}>
+                      <FaChartColumn /> Statistics
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/all-parcels"
+                      className="flex items-center gap-2 px-4 py-2">
                       <FaBoxesStacked /> All Parcels
                     </NavLink>
                   </li>
@@ -108,13 +115,6 @@ const Sidebar = () => {
                       to="/dashboard/all-riders"
                       className="flex items-center gap-2 px-4 py-2">
                       <FaUsersGear /> All Delivery Men
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/statistics"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaChartColumn /> Statistics
                     </NavLink>
                   </li>
                 </>

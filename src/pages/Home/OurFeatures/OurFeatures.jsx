@@ -1,25 +1,28 @@
 import SectionTitle from "../../../component/SectionTitle";
 import FeatureCard from "./FeatureCard";
+import sameDayImg from "./same-day-delivery-sm.png";
+import parcelSafetyImg from "./delivery-icon-sm.png";
+import homeDeliveryImg from "./Home-delivery-sm.png";
 
 const OurFeatures = () => {
   const ourFeatures = [
     {
       _id: "abc",
-      img: "https://i.ibb.co/Xs1NW1h/Same-day-delivery.png",
+      img: sameDayImg,
       title: "Express Delivery",
       description:
         "Enjoy same day delivery from us in express delivery option.",
     },
     {
       _id: "bcd",
-      img: "https://i.ibb.co/GHnptGT/delivery-icon.png",
+      img: parcelSafetyImg,
       title: "Parcel Safety",
       description:
         "Be relaxed while we deliver. We ensure 100% safety of your product.",
     },
     {
       _id: "cde",
-      img: "https://i.ibb.co/4p1H0nN/Home-delivery.png",
+      img: homeDeliveryImg,
       title: "Home Delivery",
       description:
         "Receive your parcel at your dore-step. No need to wait in line.",

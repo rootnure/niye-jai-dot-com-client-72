@@ -7,8 +7,8 @@ import UserRoute from "../../../router/UserRoute";
 import BookAParcel from "../BookAParcel/BookAParcel";
 
 const ConditionalPage = () => {
-  const { role, isRolePending } = useRole();
-  if (isRolePending) {
+  const { role, isRoleLoading } = useRole();
+  if (isRoleLoading) {
     return <Loading />;
   } else if (role === "User") {
     return (

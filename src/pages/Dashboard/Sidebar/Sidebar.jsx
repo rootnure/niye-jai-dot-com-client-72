@@ -17,8 +17,8 @@ import useLogout from "../../../hooks/useLogout";
 import Loading from "../../../component/Loading";
 const Sidebar = () => {
   const { user } = useAuth();
-  const { pathname } = useLocation();
   const { role } = useRole();
+  const { pathname } = useLocation();
 
   const handleLogOut = useLogout();
 
@@ -35,22 +35,15 @@ const Sidebar = () => {
         ) : (
           <div>
             <ul className="font-medium text-xl mt-6 space-y-2">
-              <li>
-                <Link
-                  to="/dashboard"
-                  className={`flex items-center gap-2 px-4 py-2 capitalize ${
-                    pathname === "/dashboard" ? "active" : ""
-                  }`}>
-                  <FaHouse /> {role} Home
-                </Link>
-              </li>
               {/* user menu items */}
               {role === "User" && (
                 <>
                   <li>
                     <NavLink
                       to="/dashboard/book-parcel"
-                      className="flex items-center gap-2 px-4 py-2">
+                      className={`flex items-center gap-2 px-4 py-2 ${
+                        pathname === "/dashboard" ? "active" : ""
+                      }`}>
                       <FaBook /> Book A Parcel
                     </NavLink>
                   </li>
@@ -76,7 +69,9 @@ const Sidebar = () => {
                   <li>
                     <NavLink
                       to="/dashboard/delivery-list"
-                      className="flex items-center gap-2 px-4 py-2">
+                      className={`flex items-center gap-2 px-4 py-2 ${
+                        pathname === "/dashboard" ? "active" : ""
+                      }`}>
                       <FaBook /> My Delivery List
                     </NavLink>
                   </li>
@@ -95,7 +90,9 @@ const Sidebar = () => {
                   <li>
                     <NavLink
                       to="/dashboard/all-parcels"
-                      className="flex items-center gap-2 px-4 py-2">
+                      className={`flex items-center gap-2 px-4 py-2 ${
+                        pathname === "/dashboard" ? "active" : ""
+                      }`}>
                       <FaBoxesStacked /> All Parcels
                     </NavLink>
                   </li>

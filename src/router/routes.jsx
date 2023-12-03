@@ -13,6 +13,7 @@ import RiderRoute from "./RiderRoute";
 import AdminRoute from "./AdminRoute";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import UpdateBooking from "../pages/Dashboard/UpdateBooking/UpdateBooking";
+import ConditionalPage from "../pages/Dashboard/ConditionalPage/ConditionalPage";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
     ),
     children: [
       // user routes
+      // use conditional rendering for default route based on user role
+      {
+        index: true,
+        element: <ConditionalPage />,
+      },
       {
         path: "book-parcel",
         element: (

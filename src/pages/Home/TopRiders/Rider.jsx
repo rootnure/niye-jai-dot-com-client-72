@@ -35,13 +35,13 @@ const Rider = ({ rider }) => {
           parcel delivered
         </h2>
         <div className="card-actions">
-          <div className="badge bg-my-primary bg-opacity-50">
+          <div className="badge bg-my-primary bg-opacity-30">
             <span className="font-bold me-1">
               {Math.ceil(Math.random() * 10) + 2}
             </span>{" "}
             time(s) best delivery men of the month
           </div>
-          <div className="badge bg-my-primary bg-opacity-50">
+          <div className="badge bg-my-primary bg-opacity-30">
             <span className="font-bold me-1">
               {Math.floor(Math.random() * 3)}
             </span>{" "}

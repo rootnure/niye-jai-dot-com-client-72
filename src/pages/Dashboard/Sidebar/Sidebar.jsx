@@ -14,6 +14,7 @@ import useRole from "../../../hooks/useRole";
 import Logo from "../../Shared/Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
 import useLogout from "../../../hooks/useLogout";
+import Loading from "../../../component/Loading";
 const Sidebar = () => {
   const { user } = useAuth();
   const { pathname } = useLocation();
@@ -29,7 +30,7 @@ const Sidebar = () => {
         </div>
         {!role ? (
           <div className="w-fit mx-auto py-6">
-            <span className="loading loading-spinner loading-lg text-success"></span>
+            <Loading />
           </div>
         ) : (
           <div>

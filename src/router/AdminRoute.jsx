@@ -6,9 +6,9 @@ import Loading from "../component/Loading";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  const { role, isLoading } = useRole();
+  const { role, isRoleLoading } = useRole();
   const { pathname } = useLocation();
-  if (loading || isLoading) return <Loading />;
+  if (loading || isRoleLoading) return <Loading />;
   if (!user || !role || role !== "Admin")
     return <Navigate to="/login" state={pathname} replace />;
   return children;

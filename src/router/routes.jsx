@@ -11,6 +11,7 @@ import AllRiders from "../pages/Dashboard/AllRiders/AllRiders";
 import UserRoute from "./UserRoute";
 import RiderRoute from "./RiderRoute";
 import AdminRoute from "./AdminRoute";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
         path: "my-parcels",
         element: (
           <UserRoute>
-            <div>My parcels</div>
+            <MyParcels />
           </UserRoute>
         ),
       },

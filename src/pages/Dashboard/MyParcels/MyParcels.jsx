@@ -6,6 +6,7 @@ import { FaPen, FaRegCommentDots, FaX } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -29,9 +30,9 @@ const MyParcels = () => {
       confirmButtonText: "Yes, cancel it!",
     });
     if (result.isConfirmed) {
-      const { data: updateRes } = await axiosSecure.patch(
-        `/bookings/${id}?status=Cancelled`
-      );
+      const { data: updateRes } = await axiosSecure.patch(`/bookings/${id}`, {
+        status: "Cancelled",
+      });
       if (updateRes.modifiedCount > 0) {
         toast.success("Booking cancelled successfully");
         refetch();
@@ -76,7 +77,7 @@ const MyParcels = () => {
               (
                 {
                   _id,
-                  parcelType,
+                  type,
                   reqDeliveryDate,
                   approxDeliveryDate,
                   bookingDate,
@@ -87,7 +88,7 @@ const MyParcels = () => {
               ) => (
                 <tr key={_id}>
                   <th>{index + 1}</th>
-                  <td>{parcelType || "-"}</td>
+                  <td>{type || "-"}</td>
                   <td>
                     {reqDeliveryDate
                       ? moment(reqDeliveryDate).format("DD-MMM-YYYY")
@@ -117,12 +118,19 @@ const MyParcels = () => {
                     {status || "-"}
                   </td>
                   <td>
-                    <button
-                      disabled={status !== "Pending"}
-                      className="btn btn-sm text-white border-my-primary hover:border-my-primary hover:bg-white border-2 bg-my-primary hover:text-my-primary me-1"
-                      title="Update Booking">
-                      <FaPen />
-                    </button>
+                    <Link
+                      to={
+                        status === "Pending"
+                          ? `/dashboard/update-booking/${_id}`
+                          : ""
+                      }>
+                      <button
+                        disabled={status !== "Pending"}
+                        className="btn btn-sm text-white border-my-primary hover:border-my-primary hover:bg-white border-2 bg-my-primary hover:text-my-primary me-1"
+                        title="Update Booking">
+                        <FaPen />
+                      </button>
+                    </Link>
                     <button
                       disabled={status !== "Pending"}
                       onClick={() => handleCancelBooking(_id)}

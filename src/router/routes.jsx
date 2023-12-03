@@ -12,6 +12,7 @@ import UserRoute from "./UserRoute";
 import RiderRoute from "./RiderRoute";
 import AdminRoute from "./AdminRoute";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+import UpdateBooking from "../pages/Dashboard/UpdateBooking/UpdateBooking";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
         element: (
           <UserRoute>
             <MyParcels />
+          </UserRoute>
+        ),
+      },
+      {
+        path: "update-booking/:id",
+        element: (
+          <UserRoute>
+            <UpdateBooking />
           </UserRoute>
         ),
       },

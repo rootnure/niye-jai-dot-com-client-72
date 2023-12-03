@@ -1,29 +1,43 @@
 import SectionTitle from "../../../component/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
-import { FaTelegramPlane } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredErrorMsg";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
+import { FaArrowsSpin } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
-const BookAParcel = () => {
+const UpdateBooking = () => {
+  const { id } = useParams();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
+  const { data: bookingData = {} } = useQuery({
+    queryKey: [id],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/booking/${id}`);
+      return data;
+    },
+  });
+  console.log(bookingData);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
 
-  const handleBookParcel = async (data) => {
-    const { data: bookingRes } = await axiosSecure.post("/bookings", data);
-    if (bookingRes.insertedId) {
-      toast.success("Booking Successful");
-      reset();
+  const handleUpdateBooking = async (data) => {
+    const { data: updateRes } = await axiosSecure.patch(
+      `/bookings/${id}`,
+      data
+    );
+    if (updateRes.modifiedCount > 0) {
       navigate("/dashboard/my-parcels");
+      toast.success("Booking data updated successfully");
     }
   };
 
@@ -31,7 +45,7 @@ const BookAParcel = () => {
     <section className="-mt-12 mb-12">
       <SectionTitle heading="Book A Parcel" subHeading="Ship Your Happiness" />
       <div className="-mt-4">
-        <form onSubmit={handleSubmit(handleBookParcel)} className="form-bdy">
+        <form onSubmit={handleSubmit(handleUpdateBooking)} className="form-bdy">
           <div className="grid grid-cols-2 gap-x-3 gap-y-1">
             <div className="form-control">
               <label className="label">
@@ -41,7 +55,7 @@ const BookAParcel = () => {
               </label>
               <input
                 type="text"
-                {...register("name", { required: true })}
+                {...register("name")}
                 placeholder="Your Full Name"
                 defaultValue={user?.displayName}
                 className="input input-my-bordered bg-gray-200"
@@ -56,7 +70,7 @@ const BookAParcel = () => {
               </label>
               <input
                 type="email"
-                {...register("email", { required: true })}
+                {...register("email")}
                 placeholder="Email"
                 defaultValue={user?.email}
                 className="input input-my-bordered bg-gray-200"
@@ -72,6 +86,7 @@ const BookAParcel = () => {
               <input
                 type="text"
                 {...register("phone", { required: true })}
+                defaultValue={bookingData.phone}
                 placeholder="Your Phone Number"
                 className="input input-my-bordered"
               />
@@ -86,6 +101,7 @@ const BookAParcel = () => {
               <input
                 type="text"
                 {...register("type", { required: true })}
+                defaultValue={bookingData.type}
                 placeholder="Fruit, Cloth, Phone etc."
                 className="input input-my-bordered"
               />
@@ -101,7 +117,8 @@ const BookAParcel = () => {
                 onChange={() => console.log("changed")}
                 type="number"
                 {...register("weight", { required: true })}
-                step={0.1}
+                step={0.01}
+                defaultValue={bookingData.weight}
                 placeholder="i.e 2.6"
                 className="input input-my-bordered"
               />
@@ -111,9 +128,9 @@ const BookAParcel = () => {
               <label className="label">
                 <span className="label-text">Price (Delivery Cost)</span>
               </label>
-              <p className="input input-my-bordered bg-gray-200 flex items-center italic text-sm overflow-hidden whitespace-nowrap">
-                Auto Calculate After Booking (1KG - 50tk., 2KG - 100tk., 2KG+ -
-                150tk.)
+              <p className="input input-my-bordered bg-gray-200 flex items-center italic text-sm font-semibold overflow-hidden whitespace-nowrap">
+                {bookingData.deliveryFee}tk. (Current) [Fee may update after
+                update]
               </p>
             </div>
             <div className="form-control">
@@ -125,6 +142,7 @@ const BookAParcel = () => {
               <input
                 type="text"
                 {...register("receiverName", { required: true })}
+                defaultValue={bookingData.receiverName}
                 placeholder="Person To Receive The Parcel"
                 className="input input-my-bordered"
               />
@@ -140,6 +158,7 @@ const BookAParcel = () => {
               <input
                 type="text"
                 {...register("receiverPhone", { required: true })}
+                defaultValue={bookingData.receiverPhone}
                 placeholder="Receiver's Phone Number"
                 className="input input-my-bordered"
               />
@@ -154,6 +173,7 @@ const BookAParcel = () => {
               <input
                 type="text"
                 {...register("deliveryAddress", { required: true })}
+                defaultValue={bookingData.deliveryAddress}
                 placeholder="Delivery Address"
                 className="input input-my-bordered"
               />
@@ -168,6 +188,9 @@ const BookAParcel = () => {
               <input
                 type="date"
                 {...register("reqDeliveryDate", { required: true })}
+                defaultValue={moment(bookingData.bookingDate).format(
+                  "YYYY-MM-DD"
+                )}
                 className="input input-my-bordered"
               />
               {errors.date && <FormFieldRequiredErrorMsg />}
@@ -187,6 +210,7 @@ const BookAParcel = () => {
                   max: 90,
                 })}
                 step={0.000000001}
+                defaultValue={bookingData.deliveryLat}
                 placeholder="i.e 21.121365496"
                 className="input input-my-bordered"
               />
@@ -219,6 +243,7 @@ const BookAParcel = () => {
                   max: 180,
                 })}
                 step={0.000000001}
+                defaultValue={bookingData.deliveryLon}
                 placeholder="i.e 21.121365496"
                 className="input input-my-bordered"
               />
@@ -227,19 +252,19 @@ const BookAParcel = () => {
               )}
               {errors.addressLon?.type === "min" && (
                 <span className="text-sm text-red-500 font-medium">
-                  Invalid Longitude Input
+                  Invalid Latitude Input
                 </span>
               )}
               {errors.addressLon?.type === "max" && (
                 <span className="text-sm text-red-500 font-medium">
-                  Invalid Longitude Input
+                  Invalid Latitude Input
                 </span>
               )}
             </div>
           </div>
           <div className="form-control mt-6">
             <button className="btn text-white border bg-my-primary hover:border-my-primary hover:bg-my-primary hover:saturate-150 w-fit">
-              <FaTelegramPlane className="text-2xl" /> Book A Parcel
+              <FaArrowsSpin className="text-xl" /> Update Booking
             </button>
           </div>
         </form>
@@ -248,4 +273,4 @@ const BookAParcel = () => {
   );
 };
 
-export default BookAParcel;
+export default UpdateBooking;

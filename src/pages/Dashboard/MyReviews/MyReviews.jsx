@@ -5,6 +5,7 @@ import useRole from "../../../hooks/useRole";
 import SummaryHeading from "../../../component/SummaryHeading";
 import { FaStar } from "react-icons/fa6";
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 const MyReviews = () => {
   const { uId } = useRole();
@@ -18,6 +19,9 @@ const MyReviews = () => {
   console.log(reviews);
   return (
     <section className="-mt-6 mb-12">
+      <Helmet>
+        <title>NiyeJai | My Reviews</title>
+      </Helmet>
       <SectionTitle heading="My Reviews" subHeading="My Pride" />
       {reviews.length ? (
         <>

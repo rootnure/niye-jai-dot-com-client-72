@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../component/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import SummaryHeading from "../../../component/SummaryHeading";
+import { Helmet } from "react-helmet-async";
 
 const AllRiders = () => {
   const axiosSecure = useAxiosSecure();
@@ -15,6 +16,9 @@ const AllRiders = () => {
 
   return (
     <section className="-mt-6 mb-12">
+      <Helmet>
+        <title>NiyeJai | All Delivery Men</title>
+      </Helmet>
       <SectionTitle heading="All Delivery Men" subHeading="Riders" />
       <SummaryHeading>Total Delivery Men: {allRiders.length}</SummaryHeading>
       {isLoading ? (

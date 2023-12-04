@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { FaArrowsSpin } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 const UpdateBooking = () => {
   const { id } = useParams();
@@ -57,6 +58,9 @@ const UpdateBooking = () => {
 
   return (
     <section className="-mt-12 mb-12">
+      <Helmet>
+        <title>NiyeJai | Update Booking</title>
+      </Helmet>
       <SectionTitle heading="Update Booking" subHeading="Fix Incorrect Data" />
       <div className="-mt-4">
         <form onSubmit={handleSubmit(handleUpdateBooking)} className="form-bdy">

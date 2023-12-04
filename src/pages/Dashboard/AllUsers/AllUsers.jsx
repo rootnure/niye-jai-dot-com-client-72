@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import SectionTitle from "../../../component/SectionTitle";
 import SummaryHeading from "../../../component/SummaryHeading";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
   const { user } = useAuth();
@@ -81,6 +82,9 @@ const AllUsers = () => {
 
   return (
     <section className="-mt-6 mb-12">
+      <Helmet>
+        <title>NiyeJai | All Users</title>
+      </Helmet>
       <SectionTitle heading="All Users" subHeading="All Registered" />
       <SummaryHeading>Total Users: {allUsers.length}</SummaryHeading>
       {isLoading ? (

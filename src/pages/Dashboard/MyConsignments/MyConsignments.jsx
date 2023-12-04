@@ -8,6 +8,7 @@ import { FaCheck, FaMapLocationDot, FaX } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const MyConsignments = () => {
   const { uId } = useRole();
@@ -68,6 +69,9 @@ const MyConsignments = () => {
 
   return (
     <section className="-mt-6 mb-12">
+      <Helmet>
+        <title>NiyeJai | My Delivery List</title>
+      </Helmet>
       <SectionTitle
         heading="My Delivery List"
         subHeading="Consignments Assigned"

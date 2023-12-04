@@ -13,6 +13,7 @@ import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredError
 import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import { Helmet } from "react-helmet-async";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -82,6 +83,9 @@ const MyParcels = () => {
 
   return (
     <section className="-mt-12 mb-12">
+      <Helmet>
+        <title>NiyeJai | My Parcels</title>
+      </Helmet>
       <SectionTitle heading="My Parcels" subHeading="Bookings" />
       <SummaryHeading>Total Bookings: {userBookings.length}</SummaryHeading>
       <div className="overflow-x-auto">

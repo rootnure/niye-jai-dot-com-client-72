@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const MyProfile = () => {
   const { user, updateUserInfo } = useAuth();
@@ -49,6 +50,9 @@ const MyProfile = () => {
 
   return (
     <section className="-mt-12 mb-12 relative">
+      <Helmet>
+        <title>NiyeJai | My Profile</title>
+      </Helmet>
       {loadingMsg && (
         <div className="absolute z-50 -top-12 left-0 right-0 flex items-center justify-center">
           <p className="px-4 py-0.5 bg-amber-300 rounded-b-lg font-medium min-h-6">

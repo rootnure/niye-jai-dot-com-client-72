@@ -2,13 +2,17 @@
 import Confetti from "react-confetti";
 import SectionTitle from "../../../component/SectionTitle";
 import { Link, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const PaymentSuccess = () => {
   const { state } = useLocation();
   const height = window.screen.height;
   const width = window.screen.width;
   return (
-    <div>
+    <section>
+      <Helmet>
+        <title>NiyeJai | Payment Success</title>
+      </Helmet>
       <SectionTitle
         heading="Payment Success Page"
         subHeading="Congratulation"
@@ -25,7 +29,7 @@ const PaymentSuccess = () => {
         width={width * 0.97}
         height={height * 0.75}
       />
-    </div>
+    </section>
   );
 };
 

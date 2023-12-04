@@ -6,6 +6,7 @@ import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredError
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const BookAParcel = () => {
   const { user } = useAuth();
@@ -29,6 +30,9 @@ const BookAParcel = () => {
 
   return (
     <section className="-mt-12 mb-12">
+      <Helmet>
+        <title>NiyeJai | Book A Parcel</title>
+      </Helmet>
       <SectionTitle heading="Book A Parcel" subHeading="Ship Your Happiness" />
       <div className="-mt-4">
         <form onSubmit={handleSubmit(handleBookParcel)} className="form-body">

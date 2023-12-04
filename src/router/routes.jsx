@@ -19,11 +19,13 @@ import AdminStatistics from "../pages/Dashboard/AdminStatistics/AdminStatistics"
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import MyConsignments from "../pages/Dashboard/MyConsignments/MyConsignments";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
+import Payment from "../pages/Dashboard/Payment/Payment";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <div>Error</div>,
     children: [
       {
         index: true,
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
         element: (
           <UserRoute>
             <MyProfile />
+          </UserRoute>
+        ),
+      },
+      {
+        path: "payment/:amount",
+        element: (
+          <UserRoute>
+            <Payment />
           </UserRoute>
         ),
       },

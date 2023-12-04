@@ -201,11 +201,13 @@ const MyParcels = () => {
                     </a>
                   </td>
                   <td>
-                    <button
-                      disabled={status !== "Pending"}
-                      className="btn border-2 border-my-secondary hover:bg-my-secondary hover:bg-opacity-50 hover:border-my-primary">
-                      Pay {deliveryFee}tk.
-                    </button>
+                    <Link to={`/dashboard/payment/${deliveryFee}`}>
+                      <button
+                        disabled={status !== "Pending"}
+                        className="btn border-2 border-my-secondary hover:bg-my-secondary hover:bg-opacity-50 hover:border-my-primary">
+                        Pay {deliveryFee}tk.
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               )

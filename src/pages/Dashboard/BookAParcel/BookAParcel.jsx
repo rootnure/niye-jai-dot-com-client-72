@@ -101,7 +101,7 @@ const BookAParcel = () => {
                 onChange={() => console.log("changed")}
                 type="number"
                 {...register("weight", { required: true })}
-                step={0.1}
+                step={0.01}
                 placeholder="i.e 2.6"
                 className="input input-my-bordered"
               />

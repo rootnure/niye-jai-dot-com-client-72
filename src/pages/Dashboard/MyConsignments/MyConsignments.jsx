@@ -16,7 +16,7 @@ const MyConsignments = () => {
     deliveryLat: 0,
     deliveryLon: 0,
   });
-  console.log(mapData);
+  mapData;
   const { data: myConsignments = [], refetch } = useQuery({
     queryKey: ["consignments", uId],
     queryFn: async () => {
@@ -175,12 +175,13 @@ const MyConsignments = () => {
                           : deliveryAddress}
                       </td>
                       <td>
-                        <FaMapLocationDot
+                        <button
                           onClick={() =>
                             setMapData({ deliveryLat, deliveryLon })
                           }
-                          className="w-fit mx-auto text-xl text-blue-500 cursor-pointer"
-                        />
+                          className="btn btn-sm">
+                          <FaMapLocationDot className="w-fit mx-auto text-xl text-blue-500 cursor-pointer" />
+                        </button>
                       </td>
                       <td className="flex items-center justify-center">
                         <button

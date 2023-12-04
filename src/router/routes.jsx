@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "notifications",
-        element: <div>Notifications</div>,
+        element: <h2 className="my-12 py-12 text-center">Coming Soon...</h2>,
       },
     ],
   },

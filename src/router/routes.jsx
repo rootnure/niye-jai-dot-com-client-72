@@ -18,6 +18,7 @@ import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import AdminStatistics from "../pages/Dashboard/AdminStatistics/AdminStatistics";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import MyConsignments from "../pages/Dashboard/MyConsignments/MyConsignments";
+import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 
 const router = createBrowserRouter([
   {
@@ -102,7 +103,7 @@ const router = createBrowserRouter([
         path: "my-reviews",
         element: (
           <RiderRoute>
-            <div>My reviews</div>
+            <MyReviews />
           </RiderRoute>
         ),
       },

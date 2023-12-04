@@ -107,16 +107,20 @@ const MyParcels = () => {
                       ? moment(approxDeliveryDate).format("DD-MMM-YYYY")
                       : status}
                   </td>
-                  <td>{deliveryMen || status}</td>
+                  <td>
+                    {deliveryMen
+                      ? deliveryMen.slice(0, 7) + "..." + deliveryMen.slice(-7)
+                      : status}
+                  </td>
                   <td
                     className={`font-bold ${
                       status === "Pending"
-                        ? "text-blue-600 italic"
+                        ? "text-cyan-500 italic"
                         : status === "Delivered"
                         ? "text-my-primary"
                         : status === "Cancelled" || status === "Returned"
                         ? "text-red-500"
-                        : "text-cyan-500"
+                        : "text-blue-600"
                     }`}>
                     {status || "-"}
                   </td>

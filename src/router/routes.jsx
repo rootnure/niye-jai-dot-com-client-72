@@ -17,6 +17,7 @@ import ConditionalPage from "../pages/Dashboard/ConditionalPage/ConditionalPage"
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import AdminStatistics from "../pages/Dashboard/AdminStatistics/AdminStatistics";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
+import MyConsignments from "../pages/Dashboard/MyConsignments/MyConsignments";
 
 const router = createBrowserRouter([
   {
@@ -93,7 +94,7 @@ const router = createBrowserRouter([
         path: "delivery-list",
         element: (
           <RiderRoute>
-            <div>delivery list</div>
+            <MyConsignments />
           </RiderRoute>
         ),
       },

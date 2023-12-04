@@ -13,7 +13,7 @@ const AllParcels = () => {
     dateFrom: "",
     dateTo: "",
   });
-  const [manageId, setManageId] = useState("");
+  const [manageItemId, setManageItemId] = useState("");
   const [selectRiderError, setSelectRiderError] = useState(false);
   const { data: bookings = [], refetch: refetchBookings } = useQuery({
     queryKey: ["bookings"],
@@ -58,7 +58,7 @@ const AllParcels = () => {
     };
     try {
       const { data: manageRes } = await axiosSecure.patch(
-        `/bookings/${manageId}`,
+        `/bookings/${manageItemId}`,
         dataToUpdate
       );
       if (manageRes.modifiedCount > 0) {
@@ -180,19 +180,19 @@ const AllParcels = () => {
                   <td
                     className={`font-bold ${
                       status === "Pending"
-                        ? "text-blue-600 italic"
+                        ? "text-cyan-500 italic"
                         : status === "Delivered"
                         ? "text-my-primary"
                         : status === "Cancelled" || status === "Returned"
                         ? "text-red-500"
-                        : "text-cyan-500"
+                        : "text-blue-600"
                     }`}>
                     {status}
                   </td>
                   <td>
                     <a
                       disabled={status !== "Pending"}
-                      onClick={() => setManageId(_id)}
+                      onClick={() => setManageItemId(_id)}
                       href="#manageBooking"
                       className="btn btn-sm bg-my-primary bg-opacity-80 border-my-primary hover:bg-my-primary hover:bg-opacity-100 text-white uppercase">
                       Manage

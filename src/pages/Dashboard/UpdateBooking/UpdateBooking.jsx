@@ -31,14 +31,28 @@ const UpdateBooking = () => {
   } = useForm();
 
   const handleUpdateBooking = async (data) => {
+    const updatedData = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      type: data.type,
+      weight: parseFloat(data.weight),
+      deliveryFee: data.weight <= 1 ? 50 : data.weight <= 2 ? 100 : 150,
+      receiverName: data.receiverName,
+      receiverPhone: data.receiverPhone,
+      deliveryAddress: data.deliveryAddress,
+      reqDeliveryDate: data.reqDeliveryDate,
+      deliveryLat: parseFloat(data.deliveryLat),
+      deliveryLon: parseFloat(data.deliveryLon),
+    };
     const { data: updateRes } = await axiosSecure.patch(
       `/bookings/${id}`,
-      data
+      updatedData
     );
     if (updateRes.modifiedCount > 0) {
-      navigate("/dashboard/my-parcels");
       toast.success("Booking data updated successfully");
     }
+    navigate("/dashboard/my-parcels");
   };
 
   return (
@@ -47,6 +61,7 @@ const UpdateBooking = () => {
       <div className="-mt-4">
         <form onSubmit={handleSubmit(handleUpdateBooking)} className="form-bdy">
           <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+            {/* booked by name */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -62,6 +77,7 @@ const UpdateBooking = () => {
                 readOnly
               />
             </div>
+            {/* booked by email */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -77,6 +93,7 @@ const UpdateBooking = () => {
                 readOnly
               />
             </div>
+            {/* booked by phone number */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -92,6 +109,7 @@ const UpdateBooking = () => {
               />
               {errors.phone && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* parcel Type */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -107,6 +125,7 @@ const UpdateBooking = () => {
               />
               {errors.type && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* parcel Weight */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -124,6 +143,7 @@ const UpdateBooking = () => {
               />
               {errors.weight && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* parcel cost */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Price (Delivery Cost)</span>
@@ -133,6 +153,7 @@ const UpdateBooking = () => {
                 weight change after update]
               </p>
             </div>
+            {/* receiver name */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -148,6 +169,7 @@ const UpdateBooking = () => {
               />
               {errors.receiverName && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* receiver phone */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -164,6 +186,7 @@ const UpdateBooking = () => {
               />
               {errors.receiverPhone && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* delivery address */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -179,6 +202,7 @@ const UpdateBooking = () => {
               />
               {errors.address && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* requested delivery date */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -188,13 +212,14 @@ const UpdateBooking = () => {
               <input
                 type="date"
                 {...register("reqDeliveryDate", { required: true })}
-                defaultValue={moment(bookingData.bookingDate).format(
+                defaultValue={moment(bookingData.reqDeliveryDate).format(
                   "YYYY-MM-DD"
                 )}
                 className="input input-my-bordered"
               />
-              {errors.date && <FormFieldRequiredErrorMsg />}
+              {errors.reqDeliveryDate && <FormFieldRequiredErrorMsg />}
             </div>
+            {/* delivery latitude */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -214,20 +239,21 @@ const UpdateBooking = () => {
                 placeholder="i.e 21.121365496"
                 className="input input-my-bordered"
               />
-              {errors.addressLat?.type === "required" && (
+              {errors.deliveryLat?.type === "required" && (
                 <FormFieldRequiredErrorMsg />
               )}
-              {errors.addressLat?.type === "min" && (
+              {errors.deliveryLat?.type === "min" && (
                 <span className="text-sm text-red-500 font-medium">
                   Invalid Latitude Input
                 </span>
               )}
-              {errors.addressLat?.type === "max" && (
+              {errors.deliveryLat?.type === "max" && (
                 <span className="text-sm text-red-500 font-medium">
                   Invalid Latitude Input
                 </span>
               )}
             </div>
+            {/* delivery longitude */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">
@@ -247,21 +273,22 @@ const UpdateBooking = () => {
                 placeholder="i.e 21.121365496"
                 className="input input-my-bordered"
               />
-              {errors.addressLon?.type === "required" && (
+              {errors.deliveryLon?.type === "required" && (
                 <FormFieldRequiredErrorMsg />
               )}
-              {errors.addressLon?.type === "min" && (
+              {errors.deliveryLon?.type === "min" && (
                 <span className="text-sm text-red-500 font-medium">
                   Invalid Latitude Input
                 </span>
               )}
-              {errors.addressLon?.type === "max" && (
+              {errors.deliveryLon?.type === "max" && (
                 <span className="text-sm text-red-500 font-medium">
                   Invalid Latitude Input
                 </span>
               )}
             </div>
           </div>
+          {/* submit button */}
           <div className="form-control mt-6">
             <button className="btn text-white border bg-my-primary hover:border-my-primary hover:bg-my-primary hover:saturate-150 w-fit">
               <FaArrowsSpin className="text-xl" /> Update Booking

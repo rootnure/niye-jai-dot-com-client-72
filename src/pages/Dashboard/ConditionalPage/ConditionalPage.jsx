@@ -6,6 +6,7 @@ import RiderRoute from "../../../router/RiderRoute";
 import UserRoute from "../../../router/UserRoute";
 import BookAParcel from "../BookAParcel/BookAParcel";
 import AdminStatistics from "../AdminStatistics/AdminStatistics";
+import MyConsignments from "../MyConsignments/MyConsignments";
 
 const ConditionalPage = () => {
   const { role, isRoleLoading } = useRole();
@@ -20,7 +21,7 @@ const ConditionalPage = () => {
   } else if (role === "Rider") {
     return (
       <RiderRoute>
-        <div>My Deliveries</div>
+        <MyConsignments />
       </RiderRoute>
     );
   } else if (role === "Admin") {

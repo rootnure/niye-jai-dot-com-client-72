@@ -1,12 +1,14 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const CheckoutForm = () => {
   const { user } = useAuth();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
@@ -63,7 +65,12 @@ const CheckoutForm = () => {
       console.log("confirm error", confirmError);
     } else {
       console.log("payment intent", paymentIntent);
-      //   if(paymentIntent.)
+      if (paymentIntent.status === "succeeded") {
+        navigate("/dashboard/payment-success", {
+          state: { payment: paymentIntent.id },
+        });
+        toast.success("Payment Successful");
+      }
     }
   };
 

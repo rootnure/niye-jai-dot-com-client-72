@@ -20,6 +20,7 @@ import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import MyConsignments from "../pages/Dashboard/MyConsignments/MyConsignments";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,14 @@ const router = createBrowserRouter([
         element: (
           <UserRoute>
             <Payment />
+          </UserRoute>
+        ),
+      },
+      {
+        path: "payment-success",
+        element: (
+          <UserRoute>
+            <PaymentSuccess />
           </UserRoute>
         ),
       },

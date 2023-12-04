@@ -1,10 +1,16 @@
 # NiyeJai Dot Com (Client)
 
-## [Live Link](http://localhost:5173/)
+## [Live Link](https://niye-jai.web.app/)
 
 ## Features
 
--
+- Added React Confetti Explosion Package
+- Authorization & Authentication added
+- Routes added and protected based on role
+- User can perform booking, edit, cancel and pay for a parcel
+- Rider can deliver or cancel booking (Confirmation Notification will show before that using Sweet Alert)
+- Admin can make a user delivery men or admin, assign delivery men and view all bookings, rider and users
+- JWT used with LS to authentication
 
 ## [Server Code](https://github.com/programming-hero-web-course1/b8a12-server-side-rootnure)
 

@@ -37,16 +37,17 @@ const CheckoutForm = () => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    // const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
 
     if (error) {
-      console.log("payment error", error);
+      //   console.log("payment error", error);
       setError(error.message);
     } else {
-      console.log("payment method", paymentMethod);
+      //   console.log("payment method", paymentMethod);
       setError("");
     }
 
@@ -62,9 +63,9 @@ const CheckoutForm = () => {
         },
       });
     if (confirmError) {
-      console.log("confirm error", confirmError);
+      //   console.log("confirm error", confirmError);
     } else {
-      console.log("payment intent", paymentIntent);
+      //   console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         navigate("/dashboard/payment-success", {
           state: { payment: paymentIntent.id },

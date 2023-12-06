@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import Loading from "../../../component/Loading";
+import NoDataMsg from "../../../component/NoDataMsg";
 
 const MyConsignments = () => {
   const { uId } = useRole();
@@ -18,7 +20,11 @@ const MyConsignments = () => {
     deliveryLon: 0,
   });
   mapData;
-  const { data: myConsignments = [], refetch } = useQuery({
+  const {
+    data: myConsignments = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["consignments", uId],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/my-consignments/${uId}`);
@@ -76,7 +82,11 @@ const MyConsignments = () => {
         heading="My Delivery List"
         subHeading="Consignments Assigned"
       />
-      {myConsignments.length ? (
+      {isLoading ? (
+        <Loading />
+      ) : !myConsignments.length > 0 ? (
+        <NoDataMsg>No Consignment Assigned To You Yet</NoDataMsg>
+      ) : (
         <>
           <SummaryHeading>
             Total Consignments: {myConsignments.length}
@@ -114,7 +124,7 @@ const MyConsignments = () => {
                   <th>Action</th>
                 </tr>
               </thead>
-              {/* row 1 */}
+              {/* body */}
               <tbody className="text-center">
                 {myConsignments.map(
                   (
@@ -210,10 +220,6 @@ const MyConsignments = () => {
             </table>
           </div>
         </>
-      ) : (
-        <h2 className="text-center font-bold text-4xl text-gray-300 my-12">
-          No Consignments Assigned Yet
-        </h2>
       )}
     </section>
   );

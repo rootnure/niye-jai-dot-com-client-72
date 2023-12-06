@@ -23,7 +23,7 @@ const Sidebar = () => {
   const handleLogOut = useLogout();
 
   return (
-    <section className="relative bg-my-primary bg-opacity-30 min-h-screen">
+    <section className="relative bg-my-primary bg-opacity-30 h-full">
       <aside className="w-72 px-6 py-3">
         <div className="flex justify-center">
           <Logo />
@@ -33,108 +33,106 @@ const Sidebar = () => {
             <Loading />
           </div>
         ) : (
-          <div className="">
-            <ul className="font-medium text-xl mt-6 space-y-2">
-              {/* user menu items */}
-              {role === "User" && (
-                <>
-                  <li>
-                    <NavLink
-                      to="/dashboard/book-parcel"
-                      className={`flex items-center gap-2 px-4 py-2 ${
-                        pathname === "/dashboard" ? "active" : ""
-                      }`}>
-                      <FaBook /> Book A Parcel
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/my-parcels"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaBox /> My Parcels
-                    </NavLink>
-                  </li>
-                </>
-              )}
-              {/* rider menu items */}
-              {role === "Rider" && (
-                <>
-                  <li>
-                    <NavLink
-                      to="/dashboard/delivery-list"
-                      className={`flex items-center gap-2 px-4 py-2 ${
-                        pathname === "/dashboard" ? "active" : ""
-                      }`}>
-                      <FaBook /> My Delivery List
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/my-reviews"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaBox /> My Reviews
-                    </NavLink>
-                  </li>
-                </>
-              )}
-              {/* admin menu items */}
-              {role === "Admin" && (
-                <>
-                  <li>
-                    <NavLink
-                      to="/dashboard/statistics"
-                      className={`flex items-center gap-2 px-4 py-2 ${
-                        pathname === "/dashboard" ? "active" : ""
-                      }`}>
-                      <FaChartColumn /> Statistics
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/all-parcels"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaBoxesStacked /> All Parcels
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/all-users"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaUsers /> All Users
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/all-riders"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaUsersGear /> All Delivery Men
-                    </NavLink>
-                  </li>
-                </>
-              )}
-              <li>
-                <NavLink
-                  to="/dashboard/profile"
-                  className="flex items-center gap-2 px-4 py-2">
-                  <FaUser /> My Profile
-                </NavLink>
-              </li>
-              <div className="divider"></div>
-              {/* common menu items */}
+          <ul className="font-medium text-xl mt-6 space-y-2">
+            {/* user menu items */}
+            {role === "User" && (
               <>
                 <li>
-                  <Link to="/" className="flex items-center gap-2 px-4 py-2">
-                    <FaHouse /> Home
-                  </Link>
+                  <NavLink
+                    to="/dashboard/book-parcel"
+                    className={`flex items-center gap-2 px-4 py-2 ${
+                      pathname === "/dashboard" ? "active" : ""
+                    }`}>
+                    <FaBook /> Book A Parcel
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/my-parcels"
+                    className="flex items-center gap-2 px-4 py-2">
+                    <FaBox /> My Parcels
+                  </NavLink>
                 </li>
               </>
-            </ul>
-          </div>
+            )}
+            {/* rider menu items */}
+            {role === "Rider" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/delivery-list"
+                    className={`flex items-center gap-2 px-4 py-2 ${
+                      pathname === "/dashboard" ? "active" : ""
+                    }`}>
+                    <FaBook /> My Delivery List
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/my-reviews"
+                    className="flex items-center gap-2 px-4 py-2">
+                    <FaBox /> My Reviews
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {/* admin menu items */}
+            {role === "Admin" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/statistics"
+                    className={`flex items-center gap-2 px-4 py-2 ${
+                      pathname === "/dashboard" ? "active" : ""
+                    }`}>
+                    <FaChartColumn /> Statistics
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/all-parcels"
+                    className="flex items-center gap-2 px-4 py-2">
+                    <FaBoxesStacked /> All Parcels
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/all-users"
+                    className="flex items-center gap-2 px-4 py-2">
+                    <FaUsers /> All Users
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/all-riders"
+                    className="flex items-center gap-2 px-4 py-2">
+                    <FaUsersGear /> All Delivery Men
+                  </NavLink>
+                </li>
+              </>
+            )}
+            <li>
+              <NavLink
+                to="/dashboard/profile"
+                className="flex items-center gap-2 px-4 py-2">
+                <FaUser /> My Profile
+              </NavLink>
+            </li>
+            <li className="divider"></li>
+            {/* common menu items */}
+            <>
+              <li>
+                <Link to="/" className="flex items-center gap-2 px-4 py-2">
+                  <FaHouse /> Home
+                </Link>
+              </li>
+            </>
+          </ul>
         )}
       </aside>
       {role && (
         <div className="absolute bottom-0 px-4 py-3 w-full flex justify-between items-center border-t bg-my-primary bg-opacity-50 border-white text-white h-16 overflow-hidden">
-          <div className="flex items-center gap-2 w-3/4">
+          <div className="flex items-center gap-2 w-5/6">
             <img
               src={user?.photoURL}
               alt="User Profile Photo"

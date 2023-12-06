@@ -12,7 +12,7 @@ import useRole from "../../../hooks/useRole";
 
 const MyProfile = () => {
   const { user, updateUserInfo } = useAuth();
-  const { role } = useRole();
+  const { role, uId } = useRole();
   const [loadingMsg, setLoadingMsg] = useState("");
   const navigate = useNavigate();
   const {
@@ -67,15 +67,20 @@ const MyProfile = () => {
         <div className="card border rounded-md lg:rounded-lg min-w-[500px]">
           <div className="h-40 bg-my-primary rounded-t-md lg:rounded-t-lg p-2 lg:p-6">
             <div className=" text-white flex items-center justify-between">
-              <h2 className="text-3xl" title={user?.displayName}>
-                Hello,{" "}
-                <span className="font-bold">
-                  {user?.displayName.length > 40
-                    ? user?.displayName.slice(0, 35) + "..."
-                    : user?.displayName}
-                </span>
-              </h2>
-              <p className="border px-2 py-0.5 rounded-badge bg-white text-slate-500 hover:scale-125 duration-150">
+              <div>
+                <h2 className="text-3xl" title={user?.displayName}>
+                  Hello,{" "}
+                  <span className="font-bold">
+                    {user?.displayName.length > 40
+                      ? user?.displayName.slice(0, 35) + "..."
+                      : user?.displayName}
+                  </span>
+                </h2>
+                <p className="text-sm mt-1">
+                  E-mail: <span className="font-semibold">{user?.email}</span>
+                </p>
+              </div>
+              <p className="border px-2 py-0.5 rounded-badge bg-white text-slate-500 prevent-text-select">
                 Role:{" "}
                 <span className="font-bold text-lg bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 text-transparent bg-clip-text">
                   {role}
@@ -89,19 +94,41 @@ const MyProfile = () => {
                 src={user?.photoURL}
                 alt=""
                 className="border-4 border-my-secondary border-opacity-70 bg-white rounded-full min-h-full min-w-full"
+                draggable={false}
               />
             </figure>
           </div>
           <div className="card-body pt-20 items-center">
+            <p className="italic text-sm">
+              ID:{" "}
+              <span className="font-semibold text-base not-italic">{uId}</span>
+            </p>
             <h2 className="card-title text-3xl font-bold mt-2 mb-6">
-              Update Your Profile Photo
+              Update Your Profile
             </h2>
             <div className="card-actions">
               <form
                 onSubmit={handleSubmit(handleUpdateProfileImage)}
                 className="form-body">
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+                <div className="grid grid-cols-2 gap-2">
                   <div className="form-control">
+                    <label className="label py-0.5">
+                      <span className="label-text">Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      {...register("name", {
+                        required: true,
+                      })}
+                      placeholder={user?.displayName}
+                      className="input input-my-bordered w-full"
+                    />
+                    {errors.photo && <FormFieldRequiredErrorMsg />}
+                  </div>
+                  <div className="form-control">
+                    <label className="label py-0.5">
+                      <span className="label-text">Profile Photo</span>
+                    </label>
                     <input
                       type="file"
                       {...register("photo", {
@@ -112,9 +139,7 @@ const MyProfile = () => {
                     />
                     {errors.photo && <FormFieldRequiredErrorMsg />}
                   </div>
-                  <div>
-                    <PrimaryBtn className="w-full">Update</PrimaryBtn>
-                  </div>
+                  <PrimaryBtn className="w-full col-span-2">Update</PrimaryBtn>
                 </div>
               </form>
             </div>

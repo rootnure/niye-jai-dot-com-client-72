@@ -14,6 +14,8 @@ import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Helmet } from "react-helmet-async";
+import Loading from "../../../component/Loading";
+import NoDataMsg from "../../../component/NoDataMsg";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -22,7 +24,11 @@ const MyParcels = () => {
     deliveryMenId: null,
     bookingId: null,
   });
-  const { data: userBookings = [], refetch } = useQuery({
+  const {
+    data: userBookings = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["bookings", user?.email],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/bookings/${user?.email}`);
@@ -87,138 +93,148 @@ const MyParcels = () => {
         <title>NiyeJai | My Parcels</title>
       </Helmet>
       <SectionTitle heading="My Parcels" subHeading="Bookings" />
-      <SummaryHeading>Total Bookings: {userBookings.length}</SummaryHeading>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead>
-            <tr className="text-center bg-my-primary text-white">
-              <th>#</th>
-              <th>Parcel Type</th>
-              <th>
-                Booking
-                <br />
-                Date
-              </th>
-              <th>
-                Requested
-                <br />
-                Delivery Date
-              </th>
-              <th>
-                Approximate
-                <br />
-                Delivery Date
-              </th>
-              <th>Delivery Men ID</th>
-              <th>Booking Status</th>
-              <th>Action</th>
-              <th>Payment</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {/* row */}
-            {userBookings.map(
-              (
-                {
-                  _id,
-                  type,
-                  reqDeliveryDate,
-                  approxDeliveryDate,
-                  bookingDate,
-                  deliveryMen,
-                  status,
-                  deliveryFee,
-                },
-                index
-              ) => (
-                <tr key={_id}>
-                  <th>{index + 1}</th>
-                  <td>{type || "-"}</td>
-                  <td>
-                    {bookingDate
-                      ? moment(bookingDate).format("DD-MMM-YYYY")
-                      : "-"}
-                  </td>
-                  <td>
-                    {reqDeliveryDate
-                      ? moment(reqDeliveryDate).format("DD-MMM-YYYY")
-                      : "-"}
-                  </td>
-                  <td>
-                    {approxDeliveryDate
-                      ? moment(approxDeliveryDate).format("DD-MMM-YYYY")
-                      : status}
-                  </td>
-                  <td>
-                    {deliveryMen
-                      ? deliveryMen.slice(0, 7) + "..." + deliveryMen.slice(-7)
-                      : status}
-                  </td>
-                  <td
-                    className={`font-bold ${
-                      status === "Pending"
-                        ? "text-cyan-500 italic"
-                        : status === "Delivered"
-                        ? "text-my-primary"
-                        : status === "Cancelled" || status === "Returned"
-                        ? "text-red-500"
-                        : "text-blue-600"
-                    }`}>
-                    {status || "-"}
-                  </td>
-                  <td>
-                    {status === "Pending" ? (
-                      <Link to={`/dashboard/update-booking/${_id}`}>
-                        <button
-                          className="btn btn-sm text-white border-my-primary hover:border-my-primary hover:bg-white border-2 bg-my-primary hover:text-my-primary me-1"
-                          title="Update Booking">
-                          <FaPen />
-                        </button>
-                      </Link>
-                    ) : (
-                      <button
-                        disabled={status !== "Pending"}
-                        className="btn btn-sm border-2 me-1">
-                        <FaPen />
-                      </button>
-                    )}
-                    <button
-                      disabled={status !== "Pending"}
-                      onClick={() => handleCancelBooking(_id)}
-                      className="btn btn-sm text-white border-red-500 hover:border-red-500 hover:bg-white border-2 bg-red-500 hover:text-red-500 me-1"
-                      title="Cancel Booking">
-                      <FaX />
-                    </button>
-                    <a
-                      disabled={status !== "Delivered"}
-                      onClick={() =>
-                        setReviewIds({
-                          deliveryMenId: deliveryMen,
-                          bookingId: _id,
-                        })
-                      }
-                      href="#reviewRiderModal"
-                      className="btn btn-sm text-white border-blue-600 hover:border-blue-600 hover:bg-white border-2 bg-blue-600 hover:text-blue-600"
-                      title="Write a review">
-                      <FaRegCommentDots />
-                    </a>
-                  </td>
-                  <td>
-                    <Link to={`/dashboard/payment/${deliveryFee}`}>
-                      <button
-                        disabled={status !== "Pending"}
-                        className="btn border-2 border-my-secondary hover:bg-my-secondary hover:bg-opacity-50 hover:border-my-primary">
-                        Pay {deliveryFee}tk.
-                      </button>
-                    </Link>
-                  </td>
+      {isLoading ? (
+        <Loading />
+      ) : !userBookings.length > 0 ? (
+        <NoDataMsg>You Haven&apos;t Booked Anything Yet</NoDataMsg>
+      ) : (
+        <>
+          <SummaryHeading>Total Bookings: {userBookings.length}</SummaryHeading>
+          <div className="overflow-x-auto">
+            <table className="table table-zebra">
+              {/* head */}
+              <thead>
+                <tr className="text-center bg-my-primary text-white">
+                  <th>#</th>
+                  <th>Parcel Type</th>
+                  <th>
+                    Booking
+                    <br />
+                    Date
+                  </th>
+                  <th>
+                    Requested
+                    <br />
+                    Delivery Date
+                  </th>
+                  <th>
+                    Approximate
+                    <br />
+                    Delivery Date
+                  </th>
+                  <th>Delivery Men ID</th>
+                  <th>Booking Status</th>
+                  <th>Action</th>
+                  <th>Payment</th>
                 </tr>
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody className="text-center">
+                {/* row */}
+                {userBookings.map(
+                  (
+                    {
+                      _id,
+                      type,
+                      reqDeliveryDate,
+                      approxDeliveryDate,
+                      bookingDate,
+                      deliveryMen,
+                      status,
+                      deliveryFee,
+                    },
+                    index
+                  ) => (
+                    <tr key={_id}>
+                      <th>{index + 1}</th>
+                      <td>{type || "-"}</td>
+                      <td>
+                        {bookingDate
+                          ? moment(bookingDate).format("DD-MMM-YYYY")
+                          : "-"}
+                      </td>
+                      <td>
+                        {reqDeliveryDate
+                          ? moment(reqDeliveryDate).format("DD-MMM-YYYY")
+                          : "-"}
+                      </td>
+                      <td>
+                        {approxDeliveryDate
+                          ? moment(approxDeliveryDate).format("DD-MMM-YYYY")
+                          : status}
+                      </td>
+                      <td>
+                        {deliveryMen
+                          ? deliveryMen.slice(0, 7) +
+                            "..." +
+                            deliveryMen.slice(-7)
+                          : status}
+                      </td>
+                      <td
+                        className={`font-bold ${
+                          status === "Pending"
+                            ? "text-cyan-500 italic"
+                            : status === "Delivered"
+                            ? "text-my-primary"
+                            : status === "Cancelled" || status === "Returned"
+                            ? "text-red-500"
+                            : "text-blue-600"
+                        }`}>
+                        {status || "-"}
+                      </td>
+                      <td>
+                        {status === "Pending" ? (
+                          <Link to={`/dashboard/update-booking/${_id}`}>
+                            <button
+                              className="btn btn-sm text-white border-my-primary hover:border-my-primary hover:bg-white border-2 bg-my-primary hover:text-my-primary me-1"
+                              title="Update Booking">
+                              <FaPen />
+                            </button>
+                          </Link>
+                        ) : (
+                          <button
+                            disabled={status !== "Pending"}
+                            className="btn btn-sm border-2 me-1">
+                            <FaPen />
+                          </button>
+                        )}
+                        <button
+                          disabled={status !== "Pending"}
+                          onClick={() => handleCancelBooking(_id)}
+                          className="btn btn-sm text-white border-red-500 hover:border-red-500 hover:bg-white border-2 bg-red-500 hover:text-red-500 me-1"
+                          title="Cancel Booking">
+                          <FaX />
+                        </button>
+                        <a
+                          disabled={status !== "Delivered"}
+                          onClick={() =>
+                            setReviewIds({
+                              deliveryMenId: deliveryMen,
+                              bookingId: _id,
+                            })
+                          }
+                          href="#reviewRiderModal"
+                          className="btn btn-sm text-white border-blue-600 hover:border-blue-600 hover:bg-white border-2 bg-blue-600 hover:text-blue-600"
+                          title="Write a review">
+                          <FaRegCommentDots />
+                        </a>
+                      </td>
+                      <td>
+                        <Link to={`/dashboard/payment/${deliveryFee}`}>
+                          <button
+                            disabled={status !== "Pending"}
+                            className="btn border-2 border-my-secondary hover:bg-my-secondary hover:bg-opacity-50 hover:border-my-primary">
+                            Pay {deliveryFee}tk.
+                          </button>
+                        </Link>
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
       {/* User Review Modal */}
       <div className="modal" role="dialog" id="reviewRiderModal">
         <div className="modal-box">

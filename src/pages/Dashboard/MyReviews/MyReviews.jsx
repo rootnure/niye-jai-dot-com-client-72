@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import SectionTitle from "../../../component/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useRole from "../../../hooks/useRole";
@@ -6,24 +6,38 @@ import SummaryHeading from "../../../component/SummaryHeading";
 import { FaStar } from "react-icons/fa6";
 import moment from "moment";
 import { Helmet } from "react-helmet-async";
+import NoDataMsg from "../../../component/NoDataMsg";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../component/Loading";
 
 const MyReviews = () => {
   const { uId } = useRole();
   const axiosSecure = useAxiosSecure();
-  const [reviews, setReviews] = useState([]);
-  useEffect(() => {
-    axiosSecure.get(`/my-review/${uId}`).then(({ data }) => {
-      setReviews(data);
-    });
-  }, [axiosSecure, uId]);
-  console.log(reviews);
+  const { data: reviews = [], isLoading } = useQuery({
+    queryKey: ["reviews", uId],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/my-review/${uId}`);
+      return data;
+    },
+  });
+  // const [reviews, setReviews] = useState([]);
+  // useEffect(() => {
+  //   axiosSecure.get(`/my-review/${uId}`).then(({ data }) => {
+  //     setReviews(data);
+  //   });
+  // }, [axiosSecure, uId]);
+  // console.log(reviews);
   return (
     <section className="-mt-6 mb-12">
       <Helmet>
         <title>NiyeJai | My Reviews</title>
       </Helmet>
       <SectionTitle heading="My Reviews" subHeading="My Pride" />
-      {reviews.length ? (
+      {isLoading ? (
+        <Loading />
+      ) : !reviews.length > 0 ? (
+        <NoDataMsg>You Have No Reviews Yet</NoDataMsg>
+      ) : (
         <>
           <SummaryHeading>Total Reviews: {reviews.length}</SummaryHeading>
           <div className="grid grid-cols-2 gap-4">
@@ -66,10 +80,6 @@ const MyReviews = () => {
             ))}
           </div>
         </>
-      ) : (
-        <h2 className="text-center my-12 py-12 text-gray-300 text-4xl">
-          No reviews Yet
-        </h2>
       )}
     </section>
   );

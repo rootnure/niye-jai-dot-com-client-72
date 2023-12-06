@@ -8,6 +8,7 @@ import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredError
 import SummaryHeading from "../../../component/SummaryHeading";
 import { Helmet } from "react-helmet-async";
 import Loading from "../../../component/Loading";
+import NoDataMsg from "../../../component/NoDataMsg";
 
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,7 +18,11 @@ const AllParcels = () => {
   });
   const [manageItemId, setManageItemId] = useState("");
   const [selectRiderError, setSelectRiderError] = useState(false);
-  const { data: bookings = [], refetch: refetchBookings } = useQuery({
+  const {
+    data: bookings = [],
+    isLoading,
+    refetch: refetchBookings,
+  } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
       const { data } = await axiosSecure.get(
@@ -84,7 +89,11 @@ const AllParcels = () => {
       <Helmet>
         <title>NiyeJai | All Parcels</title>
       </Helmet>
-      {bookings.length > 0 ? (
+      {isLoading ? (
+        <Loading />
+      ) : !bookings.length > 0 ? (
+        <NoDataMsg>No Bookings Yet</NoDataMsg>
+      ) : (
         <>
           <SectionTitle subHeading="All Bookings" heading="Parcels" />
           <div className="my-6 flex justify-between items-center">
@@ -212,8 +221,6 @@ const AllParcels = () => {
             </table>
           </div>
         </>
-      ) : (
-        <Loading />
       )}
       <div className="modal" role="dialog" id="manageBooking">
         <div className="modal-box">

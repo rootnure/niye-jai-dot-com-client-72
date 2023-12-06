@@ -112,7 +112,7 @@ const AllUsers = () => {
                     name = "",
                     photo = "",
                     email = "",
-                    phone = "+880 1***-******",
+                    phone = "",
                     bookingCount = 0,
                     totalSpend = 0,
                   },
@@ -134,11 +134,12 @@ const AllUsers = () => {
                           <div className="font-bold">{name}</div>
                           <div className="text-sm opacity-50" title={email}>
                             <a href={`mailto:${email}`}>
-                              {email.split("@")[0].slice(0, 2) +
-                                "..." +
-                                email.split("@")[0].slice(-2) +
-                                "@" +
-                                email.split("@")[1]}
+                              {email &&
+                                email.split("@")[0].slice(0, 2) +
+                                  "..." +
+                                  email.split("@")[0].slice(-2) +
+                                  "@" +
+                                  email.split("@")[1]}
                             </a>
                           </div>
                         </div>
@@ -146,12 +147,16 @@ const AllUsers = () => {
                     </td>
                     <td>
                       <a
-                        href={`tel:${phone
-                          .split(" ")
-                          .join("")
-                          .split("-")
-                          .join("")}`}>
-                        {phone}
+                        href={
+                          phone
+                            ? `tel:${phone
+                                .split(" ")
+                                .join("")
+                                .split("-")
+                                .join("")}`
+                            : ""
+                        }>
+                        {phone || "+880 1***-******"}
                       </a>
                     </td>
                     <td className="text-center">{bookingCount}</td>

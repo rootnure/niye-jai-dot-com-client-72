@@ -8,9 +8,11 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useRole from "../../../hooks/useRole";
 
 const MyProfile = () => {
   const { user, updateUserInfo } = useAuth();
+  const { role } = useRole();
   const [loadingMsg, setLoadingMsg] = useState("");
   const navigate = useNavigate();
   const {
@@ -65,9 +67,20 @@ const MyProfile = () => {
         <div className="card border rounded-md lg:rounded-lg min-w-[500px]">
           <div className="h-40 bg-my-primary rounded-t-md lg:rounded-t-lg p-2 lg:p-6">
             <div className=" text-white flex items-center justify-between">
-              <h2 className="text-white text-3xl font-semibold">
-                Hello, {user?.displayName}
+              <h2 className="text-3xl" title={user?.displayName}>
+                Hello,{" "}
+                <span className="font-bold">
+                  {user?.displayName.length > 40
+                    ? user?.displayName.slice(0, 35) + "..."
+                    : user?.displayName}
+                </span>
               </h2>
+              <p className="border px-2 py-0.5 rounded-badge bg-white text-slate-500 hover:scale-125 duration-150">
+                Role:{" "}
+                <span className="font-bold text-lg bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 text-transparent bg-clip-text">
+                  {role}
+                </span>
+              </p>
             </div>
           </div>
           <div className="absolute top-[88px] left-0 right-0 flex justify-center">

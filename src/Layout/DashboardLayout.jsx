@@ -8,8 +8,10 @@ const DashboardLayout = () => {
     <>
       <Container>
         <main className="flex">
-          <Sidebar />
-          <section className="p-12 min-h-screen bg-my-primary bg-opacity-5 w-full">
+          <section className="h-screen fixed">
+            <Sidebar />
+          </section>
+          <section className="p-12 min-h-screen bg-my-primary bg-opacity-5 w-full ms-72">
             <Outlet />
           </section>
         </main>

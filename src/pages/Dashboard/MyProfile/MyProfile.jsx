@@ -63,15 +63,15 @@ const MyProfile = () => {
       <SectionTitle heading="My Profile" subHeading="User Data" />
       <div className="min-h-[calc(100vh-280px)] flex items-center justify-center">
         <div className="card border rounded-md lg:rounded-lg min-w-[500px]">
-          <div className="h-32 bg-my-primary rounded-t-md lg:rounded-t-lg p-2 lg:p-6">
+          <div className="h-40 bg-my-primary rounded-t-md lg:rounded-t-lg p-2 lg:p-6">
             <div className=" text-white flex items-center justify-between">
               <h2 className="text-white text-3xl font-semibold">
                 Hello, {user?.displayName}
               </h2>
             </div>
           </div>
-          <div className="absolute top-16 left-0 right-0 flex justify-center">
-            <figure className="rounded-full h-32 w-32">
+          <div className="absolute top-[88px] left-0 right-0 flex justify-center">
+            <figure className="rounded-full h-36 w-36">
               <img
                 src={user?.photoURL}
                 alt=""

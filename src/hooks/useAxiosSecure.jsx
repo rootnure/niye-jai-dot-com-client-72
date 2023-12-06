@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const axiosSecure = axios.create({
-  // baseURL: "http://localhost:5000",
-  baseURL: "https://72-niye-jai-dot-com-server.vercel.app",
+  baseURL: "http://localhost:5000",
+  // baseURL: "https://72-niye-jai-dot-com-server.vercel.app",
 });
 const useAxiosSecure = () => {
   const { logOut } = useAuth();

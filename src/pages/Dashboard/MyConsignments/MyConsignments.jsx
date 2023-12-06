@@ -172,7 +172,7 @@ const MyConsignments = () => {
                         </a>
                       </td>
                       <td title={deliveryAddress}>
-                        {deliveryAddress.length > 5
+                        {deliveryAddress.length > 15
                           ? deliveryAddress.slice(0, 6) +
                             "..." +
                             deliveryAddress.slice(-6)

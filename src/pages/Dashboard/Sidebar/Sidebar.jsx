@@ -24,7 +24,7 @@ const Sidebar = () => {
 
   return (
     <section className="relative bg-my-primary bg-opacity-30 min-h-screen">
-      <aside className="w-max min-w-[256px] px-6 py-3">
+      <aside className="w-72 px-6 py-3">
         <div className="flex justify-center">
           <Logo />
         </div>
@@ -33,7 +33,7 @@ const Sidebar = () => {
             <Loading />
           </div>
         ) : (
-          <div>
+          <div className="">
             <ul className="font-medium text-xl mt-6 space-y-2">
               {/* user menu items */}
               {role === "User" && (
@@ -52,13 +52,6 @@ const Sidebar = () => {
                       to="/dashboard/my-parcels"
                       className="flex items-center gap-2 px-4 py-2">
                       <FaBox /> My Parcels
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/profile"
-                      className="flex items-center gap-2 px-4 py-2">
-                      <FaUser /> My Profile
                     </NavLink>
                   </li>
                 </>
@@ -119,6 +112,13 @@ const Sidebar = () => {
                   </li>
                 </>
               )}
+              <li>
+                <NavLink
+                  to="/dashboard/profile"
+                  className="flex items-center gap-2 px-4 py-2">
+                  <FaUser /> My Profile
+                </NavLink>
+              </li>
               <div className="divider"></div>
               {/* common menu items */}
               <>

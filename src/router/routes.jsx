@@ -85,14 +85,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "profile",
-        element: (
-          <UserRoute>
-            <MyProfile />
-          </UserRoute>
-        ),
-      },
-      {
         path: "payment/:amount",
         element: (
           <UserRoute>
@@ -159,6 +151,10 @@ const router = createBrowserRouter([
             <AllRiders />
           </AdminRoute>
         ),
+      },
+      {
+        path: "profile",
+        element: <MyProfile />,
       },
     ],
   },

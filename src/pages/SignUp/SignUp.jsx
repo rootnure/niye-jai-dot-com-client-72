@@ -30,6 +30,8 @@ const SignUp = () => {
   } = useForm();
 
   const handleSignUp = async (data) => {
+    console.log(data);
+    if (isNaN("user")) return;
     setRoleErrMsg("");
     setAuthLoading(true);
     if (data.userType === "default") {

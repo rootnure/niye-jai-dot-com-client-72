@@ -6,8 +6,6 @@ import { Helmet } from "react-helmet-async";
 
 const PaymentSuccess = () => {
   const { state } = useLocation();
-  const height = window.screen.height;
-  const width = window.screen.width;
   return (
     <section>
       <Helmet>
@@ -24,11 +22,7 @@ const PaymentSuccess = () => {
       <Link to="/dashboard">
         <button className="btn btn-outline text-base">Book a new parcel</button>
       </Link>
-      <Confetti
-        numberOfPieces={250}
-        width={width * 0.97}
-        height={height * 0.75}
-      />
+      <Confetti className="h-screen w-full" numberOfPieces={300} />
     </section>
   );
 };

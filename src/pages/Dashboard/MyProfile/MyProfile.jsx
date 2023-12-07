@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../../component/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
-import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredErrorMsg";
 import PrimaryBtn from "../../../component/PrimaryBtn";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,45 +8,67 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useRole from "../../../hooks/useRole";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyProfile = () => {
   const { user, updateUserInfo } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const { role, uId } = useRole();
   const [loadingMsg, setLoadingMsg] = useState("");
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handleUpdateProfileImage = async (data) => {
-    setLoadingMsg("Image Uploading");
-    const imageFile = { image: data.photo[0] };
-    const img_api_url = import.meta.env.VITE_IMAGE_API_URL.replace(
-      "CLIENT_API_KEY",
-      import.meta.env.VITE_IMGBB_API_KEY
-    );
-    // image upload
-    try {
-      const imgRes = await axios.post(img_api_url, imageFile, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-      setLoadingMsg("Please Wait...");
+    const name = data?.name;
+    if (data.photo[0]) {
+      setLoadingMsg("Uploading image...");
+      const imageFile = { image: data.photo[0] };
+      const img_api_url = import.meta.env.VITE_IMAGE_API_URL.replace(
+        "CLIENT_API_KEY",
+        import.meta.env.VITE_IMGBB_API_KEY
+      );
       try {
-        await updateUserInfo(data?.name, imgRes?.data?.data?.display_url);
-        toast.success("Profile Picture Updated");
-        navigate("/", { replace: true });
-      } catch (updateInfoErr) {
-        console.log(updateInfoErr);
+        // image upload
+        const imgRes = await axios.post(img_api_url, imageFile, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        });
+        setLoadingMsg("Please wait...");
+        // update image link and user name if changed
+        try {
+          await updateUserInfo(
+            name || user?.name,
+            imgRes?.data?.data?.display_url
+          );
+          await axiosSecure.patch(`/update-name-photo/${user?.email}`, {
+            name: name,
+            photo: imgRes?.data?.data?.display_url,
+          });
+          toast.success("Profile Updated");
+          navigate("/dashboard");
+        } catch (updateInfoErr) {
+          console.log({ updateInfoErr });
+        }
+      } catch (photoULErr) {
+        console.log({ photoULErr });
       }
-    } catch (photoULErr) {
-      console.log(photoULErr);
-    } finally {
-      setLoadingMsg("");
+    } else if (name) {
+      try {
+        await updateUserInfo(name, user?.photoURL);
+        await axiosSecure.patch(`/update-name-photo/${user?.email}`, {
+          name: name,
+          photo: user?.photoURL,
+        });
+        toast.success("Name Updated");
+        navigate("/dashboard");
+      } catch (updateNameErr) {
+        console.log({ updateNameErr });
+      }
+    } else {
+      toast.info("Nothing to update");
     }
+    setLoadingMsg("");
   };
 
   return (
@@ -93,7 +114,7 @@ const MyProfile = () => {
               <img
                 src={user?.photoURL}
                 alt=""
-                className="border-4 border-my-secondary border-opacity-70 bg-white rounded-full min-h-full min-w-full"
+                className="border-4 border-my-secondary border-opacity-70 bg-white rounded-full min-h-full min-w-full object-cover"
                 draggable={false}
               />
             </figure>
@@ -103,7 +124,7 @@ const MyProfile = () => {
               ID:{" "}
               <span className="font-semibold text-base not-italic">{uId}</span>
             </p>
-            <h2 className="card-title text-3xl font-bold mt-2 mb-6">
+            <h2 className="card-title text-3xl font-bold my-1">
               Update Your Profile
             </h2>
             <div className="card-actions">
@@ -117,13 +138,11 @@ const MyProfile = () => {
                     </label>
                     <input
                       type="text"
-                      {...register("name", {
-                        required: true,
-                      })}
+                      {...register("name")}
                       placeholder={user?.displayName}
+                      autoComplete="off"
                       className="input input-my-bordered w-full"
                     />
-                    {errors.photo && <FormFieldRequiredErrorMsg />}
                   </div>
                   <div className="form-control">
                     <label className="label py-0.5">
@@ -131,13 +150,10 @@ const MyProfile = () => {
                     </label>
                     <input
                       type="file"
-                      {...register("photo", {
-                        required: true,
-                      })}
+                      {...register("photo")}
                       className="file-input file-input-bordered file-input-my-primary w-full"
                       accept=".jpg,.jpeg,.png,.webp"
                     />
-                    {errors.photo && <FormFieldRequiredErrorMsg />}
                   </div>
                   <PrimaryBtn className="w-full col-span-2">Update</PrimaryBtn>
                 </div>

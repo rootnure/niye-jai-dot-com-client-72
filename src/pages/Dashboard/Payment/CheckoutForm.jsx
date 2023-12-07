@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
 const CheckoutForm = () => {
   const { user } = useAuth();
@@ -12,17 +13,28 @@ const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
-  const { amount } = useParams();
+  const { bookingId } = useParams();
   const axiosSecure = useAxiosSecure();
-  const price = parseFloat(amount);
+
+  const { data: booking = {}, isLoading } = useQuery({
+    queryKey: ["booking", bookingId],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/booking/${bookingId}`);
+      return data;
+    },
+  });
+
+  const price = booking?.deliveryFee;
 
   useEffect(() => {
-    axiosSecure
-      .post("/create-payment-intent", { amount: price })
-      .then((res) => {
-        setClientSecret(res.data.clientSecret);
-      });
-  }, [axiosSecure, price]);
+    if (!isLoading) {
+      axiosSecure
+        .post("/create-payment-intent", { amount: price })
+        .then((res) => {
+          setClientSecret(res.data.clientSecret);
+        });
+    }
+  }, [axiosSecure, price, isLoading]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,7 +112,7 @@ const CheckoutForm = () => {
           type="submit"
           className="btn bg-my-primary border-2 text-white hover:text-my-primary border-my-primary hover:bg-white hover:border-my-primary my-6 min-w-24 text-xl"
           disabled={!stripe || !clientSecret}>
-          Pay {amount}tk.
+          Pay {price}tk.
         </button>
       </form>
       {error && (

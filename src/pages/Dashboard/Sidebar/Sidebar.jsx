@@ -136,7 +136,7 @@ const Sidebar = () => {
             <img
               src={user?.photoURL}
               alt="User Profile Photo"
-              className="h-8 w-8 rounded-full border border-white"
+              className="h-8 w-8 object-cover rounded-full border border-white"
             />
             <p className="font-medium overflow-hidden text-ellipsis">
               {user?.displayName}

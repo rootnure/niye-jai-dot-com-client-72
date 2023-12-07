@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "payment/:amount",
+        path: "payment/:bookingId",
         element: (
           <UserRoute>
             <Payment />

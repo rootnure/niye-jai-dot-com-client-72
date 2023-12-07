@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import Container from "../../../component/Container";
 import Logo from "../Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
-import { FaBell } from "react-icons/fa6";
+import { FaArrowRightFromBracket, FaBell } from "react-icons/fa6";
 import useLogout from "../../../hooks/useLogout";
 
 const NavBarPC = () => {
@@ -33,21 +33,26 @@ const NavBarPC = () => {
             tabIndex={0}
             role="button"
             className="hover:bg-gray-200 px-3 py-0.5 rounded-lg">
-            <img
-              src={user.photoURL}
-              alt={`Profile photo of ${user.displayName}`}
-              className="h-8 w-8 rounded-full"
-            />
+            <figure className="h-8 w-8">
+              <img
+                src={user.photoURL}
+                alt={`Profile photo of ${user.displayName}`}
+                className="min-w-full min-h-full object-cover rounded-full"
+              />
+            </figure>
           </div>
-          <ul className="dropdown-content z-[1] menu p-2 border bg-base-100 rounded-box w-52 text-center">
+          <ul className="dropdown-content z-[1] menu p-2 border bg-base-100 rounded-box w-40 text-center">
             <li className="text-center py-2 text-my-primary">
               {user.displayName}
             </li>
             <li>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard/profile">Profile</Link>
             </li>
             <li>
-              <button onClick={handleLogOut}>LogOut</button>
+              <button onClick={handleLogOut} className="group">
+                LogOut
+                <FaArrowRightFromBracket className="group-hover:rotate-[360deg] duration-200" />
+              </button>
             </li>
           </ul>
         </div>

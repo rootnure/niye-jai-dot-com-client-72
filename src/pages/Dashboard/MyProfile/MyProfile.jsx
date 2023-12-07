@@ -37,14 +37,20 @@ const MyProfile = () => {
         setLoadingMsg("Please wait...");
         // update image link and user name if changed
         try {
+          // update to firebase
           await updateUserInfo(
             name || user?.name,
             imgRes?.data?.data?.display_url
           );
-          await axiosSecure.patch(`/update-name-photo/${user?.email}`, {
-            name: name,
-            photo: imgRes?.data?.data?.display_url,
-          });
+          // update to db
+          const dbUpdateRes = await axiosSecure.patch(
+            `/update-name-photo/${user?.email}`,
+            {
+              name: name,
+              photo: imgRes?.data?.data?.display_url,
+            }
+          );
+          console.log(dbUpdateRes);
           toast.success("Profile Updated");
           navigate("/dashboard");
         } catch (updateInfoErr) {
@@ -53,9 +59,11 @@ const MyProfile = () => {
       } catch (photoULErr) {
         console.log({ photoULErr });
       }
-    } else if (name) {
+    } else if (name && name !== user?.displayName) {
       try {
+        // update to firebase
         await updateUserInfo(name, user?.photoURL);
+        // update to db
         await axiosSecure.patch(`/update-name-photo/${user?.email}`, {
           name: name,
           photo: user?.photoURL,

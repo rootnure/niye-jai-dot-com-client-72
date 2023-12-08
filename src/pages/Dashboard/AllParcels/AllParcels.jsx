@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../component/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import FormFieldRequiredErrorMsg from "../../../component/FormFieldRequiredErrorMsg";
 import SummaryHeading from "../../../component/SummaryHeading";
@@ -18,19 +18,20 @@ const AllParcels = () => {
   });
   const [manageItemId, setManageItemId] = useState("");
   const [selectRiderError, setSelectRiderError] = useState(false);
-  const {
-    data: bookings = [],
-    isLoading,
-    refetch: refetchBookings,
-  } = useQuery({
-    queryKey: ["bookings"],
-    queryFn: async () => {
-      const { data } = await axiosSecure.get(
+  const [bookings, setBookings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [refetchValue, setRefetchValue] = useState(0);
+  useEffect(() => {
+    setIsLoading(true);
+    axiosSecure
+      .get(
         `/bookings?dateFrom=${dateRange.dateFrom}&dateTo=${dateRange.dateTo}`
-      );
-      return data;
-    },
-  });
+      )
+      .then(({ data }) => {
+        setBookings(data);
+        setIsLoading(false);
+      });
+  }, [axiosSecure, dateRange, refetchValue]);
   const { data: riders = [] } = useQuery({
     queryKey: ["riders"],
     queryFn: async () => {
@@ -70,18 +71,27 @@ const AllParcels = () => {
       );
       if (manageRes.modifiedCount > 0) {
         reset();
-        refetchBookings();
+        setRefetchValue(refetchValue > 9 ? 0 : refetchValue + 1);
       }
     } catch (manageErr) {
       console.log(manageErr);
     }
   };
 
-  const handleBookingsFilter = async (data) => {
+  const handleBookingsFilter = (data) => {
     setDateRange({
       dateFrom: moment(data.dateFrom).format("YYYY-MM-DD"),
       dateTo: moment(data.dateTo).format("YYYY-MM-DD"),
     });
+  };
+
+  const handleResetFilter = async () => {
+    if (dateRange.dateFrom !== "" || dateRange.dateFrom !== "") {
+      setDateRange({
+        dateFrom: "",
+        dateTo: "",
+      });
+    }
   };
 
   return (
@@ -89,57 +99,73 @@ const AllParcels = () => {
       <Helmet>
         <title>NiyeJai | All Parcels</title>
       </Helmet>
+      <SectionTitle subHeading="All Bookings" heading="Parcels" />
+      <div className="my-6 flex justify-between items-center">
+        <SummaryHeading>Total Bookings: {bookings.length}</SummaryHeading>
+        <form
+          onSubmit={handleSubmit2(handleBookingsFilter)}
+          className="form-body">
+          <div className="flex items-end gap-x-3 gap-y-1">
+            <div className="form-control relative">
+              <label className="label">
+                <span className="label-text">
+                  Date From
+                  <span className="text-red-500">*</span>
+                </span>
+              </label>
+              <input
+                type="date"
+                {...register2("dateFrom", { required: true })}
+                className={`input input-my-bordered ${
+                  errors2.dateFrom ? "!border-red-500 bg-red-50" : ""
+                }`}
+              />
+              {errors2.dateFrom && (
+                <div className="absolute -bottom-6">
+                  <FormFieldRequiredErrorMsg />
+                </div>
+              )}
+            </div>
+            <div className="form-control relative">
+              <label className="label">
+                <span className="label-text">
+                  Date To
+                  <span className="text-red-500">*</span>
+                </span>
+              </label>
+              <input
+                type="date"
+                {...register2("dateTo", { required: true })}
+                className={`input input-my-bordered ${
+                  errors2.dateTo ? "!border-red-500 bg-red-50" : ""
+                }`}
+              />
+              {errors2.dateTo && (
+                <div className="absolute -bottom-6">
+                  <FormFieldRequiredErrorMsg />
+                </div>
+              )}
+            </div>
+            <button
+              type="submit"
+              className="btn bg-my-primary bg-opacity-80 border-my-primary hover:bg-my-primary hover:bg-opacity-100 text-white uppercase w-28">
+              Filter
+            </button>
+            <button
+              type="reset"
+              onClick={handleResetFilter}
+              className="btn bg-my-primary bg-opacity-80 border-my-primary hover:bg-my-primary hover:bg-opacity-100 text-white uppercase w-28">
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
       {isLoading ? (
         <Loading />
       ) : !bookings.length > 0 ? (
-        <NoDataMsg>No Bookings Yet</NoDataMsg>
+        <NoDataMsg>No Bookings</NoDataMsg>
       ) : (
         <>
-          <SectionTitle subHeading="All Bookings" heading="Parcels" />
-          <div className="my-6 flex justify-between items-center">
-            <SummaryHeading>Total Bookings: {bookings.length}</SummaryHeading>
-            <div>
-              <form
-                onSubmit={handleSubmit2(handleBookingsFilter)}
-                className="form-body">
-                <div className="flex items-end gap-x-3 gap-y-1">
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">
-                        Date From
-                        <span className="text-red-500">*</span>
-                      </span>
-                    </label>
-                    <input
-                      type="date"
-                      {...register2("dateFrom", { required: true })}
-                      className="input input-my-bordered"
-                    />
-                    {errors2.dateFrom && <FormFieldRequiredErrorMsg />}
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">
-                        Date To
-                        <span className="text-red-500">*</span>
-                      </span>
-                    </label>
-                    <input
-                      type="date"
-                      {...register2("dateTo", { required: true })}
-                      className="input input-my-bordered"
-                    />
-                    {errors2.dateTo && <FormFieldRequiredErrorMsg />}
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn bg-my-primary bg-opacity-80 border-my-primary hover:bg-my-primary hover:bg-opacity-100 text-white uppercase w-28">
-                    Filter
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
           <div className="overflow-x-auto">
             <table className="table table-zebra">
               {/* head */}

@@ -33,7 +33,7 @@ const NavBarPC = () => {
             tabIndex={0}
             role="button"
             className="hover:bg-gray-200 px-3 py-0.5 rounded-lg">
-            <figure className="h-8 w-8">
+            <figure className="h-8 w-8 object-cover">
               <img
                 src={user.photoURL}
                 alt={`Profile photo of ${user.displayName}`}
@@ -41,8 +41,8 @@ const NavBarPC = () => {
               />
             </figure>
           </div>
-          <ul className="dropdown-content z-[1] menu p-2 border bg-base-100 rounded-box w-40 text-center">
-            <li className="text-center py-2 text-my-primary">
+          <ul className="dropdown-content z-[1] menu p-2 border bg-base-100 rounded-box w-max min-w-[120px] text-center">
+            <li className="text-center px-4 py-2 text-my-primary whitespace-nowrap">
               {user.displayName}
             </li>
             <li>

@@ -6,7 +6,7 @@
 
 ## Live Link: [Click Here](https://niye-jai.web.app/)
 
-## Server Side Code: [Click Here](https://github.com/programming-hero-web-course1/b8a12-server-side-rootnure)
+## Server Side Code: [Click Here](https://github.com/rootnure/niye-jai-dot-com-server-72)
 
 ## Features
 
